@@ -20,15 +20,16 @@ public class GameManager8 : Singleton<GameManager8>
     }
 
     public EventGameState OnGameStateChanged;
-
-    private List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
     public GameObject[] systemPrefabs;
-    private List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
-    private GameState _currentGameState = GameState.PREGAME;
-    private String[] listScene = {"SampleScene", "sas"};
-    private int indexScene = 0;
 
     private string _currentLevelName = string.Empty;
+    private readonly List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
+
+    private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
+    private int indexScene;
+    private readonly string[] listScene = {"SampleScene", "sas"};
+
+    public GameState CurrentGameState { get; private set; } = GameState.PREGAME;
 
     public void Start()
     {
@@ -36,27 +37,24 @@ public class GameManager8 : Singleton<GameManager8>
         InstanciateSystemPrefab();
     }
 
-    void InstanciateSystemPrefab()
-    {
-        GameObject prefabInstance;
-        for (int i = 0; i < systemPrefabs.Length; i++)
-        {
-            prefabInstance = Instantiate(systemPrefabs[i]);
-            _instanceSystemPrefabs.Add(prefabInstance);
-        }
-    }
-
     protected override void OnDestroy()
     {
         base.OnDestroy();
         if (_instanceSystemPrefabs != null)
         {
-            foreach (var prefabInstance in _instanceSystemPrefabs)
-            {
-                Destroy(prefabInstance);
-            }
+            foreach (var prefabInstance in _instanceSystemPrefabs) Destroy(prefabInstance);
 
             _instanceSystemPrefabs.Clear();
+        }
+    }
+
+    private void InstanciateSystemPrefab()
+    {
+        GameObject prefabInstance;
+        for (var i = 0; i < systemPrefabs.Length; i++)
+        {
+            prefabInstance = Instantiate(systemPrefabs[i]);
+            _instanceSystemPrefabs.Add(prefabInstance);
         }
     }
 
@@ -64,7 +62,7 @@ public class GameManager8 : Singleton<GameManager8>
     {
         _currentLevelName = levelName;
 
-        AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        var loadSceneAsync = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
         if (loadSceneAsync == null) // La scene existe dans le build setting
         {
             print("error loading scene : " + levelName);
@@ -77,7 +75,7 @@ public class GameManager8 : Singleton<GameManager8>
 
     public void UnloadLevel(string levelName)
     {
-        AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(levelName);
+        var unloadSceneAsync = SceneManager.UnloadSceneAsync(levelName);
         if (unloadSceneAsync == null)
         {
             print("error unloading scene : " + levelName);
@@ -93,10 +91,7 @@ public class GameManager8 : Singleton<GameManager8>
         {
             _loadOperations.Remove(ao);
             // Ici on peut aviser les composantes qui ont besoin de savoir que le level est loadé
-            if (_loadOperations.Count == 0)
-            {
-                UpdateGameState(GameState.RUNNING);
-            }
+            if (_loadOperations.Count == 0) UpdateGameState(GameState.RUNNING);
         }
 
         print("load completed");
@@ -107,11 +102,11 @@ public class GameManager8 : Singleton<GameManager8>
         print("unload completed");
     }
 
-    void UpdateGameState(GameState newGameState)
+    private void UpdateGameState(GameState newGameState)
     {
-        var previousGameState = _currentGameState;
-        _currentGameState = newGameState;
-        switch (_currentGameState)
+        var previousGameState = CurrentGameState;
+        CurrentGameState = newGameState;
+        switch (CurrentGameState)
         {
             case GameState.PREGAME:
                 break;
@@ -119,17 +114,9 @@ public class GameManager8 : Singleton<GameManager8>
                 break;
             case GameState.PAUSE:
                 break;
-            default:
-                break;
         }
 
-        OnGameStateChanged.Invoke(_currentGameState, previousGameState);
-    }
-
-    public GameState CurrentGameState
-    {
-        get => _currentGameState;
-        private set => _currentGameState = value;
+        OnGameStateChanged.Invoke(CurrentGameState, previousGameState);
     }
 
     public void StartGame()

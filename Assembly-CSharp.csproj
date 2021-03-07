@@ -58,18 +58,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AlienControler.cs" />
-     <Compile Include="Assets\Scripts\AlienShoot.cs" />
-     <Compile Include="Assets\Scripts\BulletAlien.cs" />
-     <Compile Include="Assets\Scripts\BulletPlayer.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
+     <Compile Include="Assets\Scripts\DisignPatherns\Singleton.cs" />
      <Compile Include="Assets\Scripts\GameManager8.cs" />
+     <Compile Include="Assets\Scripts\Invaders\BulletAlien.cs" />
+     <Compile Include="Assets\Scripts\Invaders\Invader.cs" />
+     <Compile Include="Assets\Scripts\Invaders\WaveController.cs" />
      <Compile Include="Assets\Scripts\LevelControler.cs" />
-     <Compile Include="Assets\Scripts\MoveAliens.cs" />
-     <Compile Include="Assets\Scripts\PlayerScript.cs" />
-     <Compile Include="Assets\Scripts\Singleton.cs" />
+     <Compile Include="Assets\Scripts\Player\BulletPlayer.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
-     <Compile Include="Assets\Scripts\WaveController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

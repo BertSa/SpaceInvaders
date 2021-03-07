@@ -13,8 +13,8 @@ public class LevelControler : Singleton<LevelControler>
 
     private void Start()
     {
-        _enemyCount = GameObject.FindGameObjectsWithTag("Alien").Length;
-        _enemiesAtStart = GameObject.FindGameObjectsWithTag("Alien").Length;
+        _enemyCount = GameObject.FindGameObjectsWithTag("Invaders").Length;
+        _enemiesAtStart = GameObject.FindGameObjectsWithTag("Invaders").Length;
     }
 
     private void Update()
