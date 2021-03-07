@@ -4,7 +4,7 @@ public class PlayerScript : MonoBehaviour
 {
     [SerializeField] public GameObject bullet;
     private float _timeStamp;
-    private const float Speed=5;
+    private const float Speed=6;
     private const float CoolDownPeriodInSeconds = 1;
 
     public void Start()

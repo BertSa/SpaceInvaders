@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-[System.Serializable]
+[Serializable]
 public class EventGameState : UnityEvent<GameManager8.GameState, GameManager8.GameState>
 {
 }
@@ -132,9 +130,6 @@ public class GameManager8 : Singleton<GameManager8>
     {
         get => _currentGameState;
         private set => _currentGameState = value;
-
-        //get { return _currentGameState; }
-        //private set { _currentGameState = value; }
     }
 
     public void StartGame()
@@ -146,10 +141,6 @@ public class GameManager8 : Singleton<GameManager8>
     {
         UpdateGameState(GameState.PAUSE);
         Time.timeScale = 0;
-        // UnloadLevel(listScene[indexScene]);
-        // var activeScene = SceneManager.GetSceneByName(listScene[indexScene]);
-        // activeScene.
-        // print(activeScene.name);
     }
 
     public void ResumeGame()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
@@ -10,19 +11,25 @@ public class BulletScript : MonoBehaviour
     public void Start()
     {
         _bullet = GetComponent<Rigidbody2D>();
-        _bullet.velocity = new Vector2(0, Direction * _speed);
     }
-    
+
+    private void Update()
+    {
+        _bullet.position += Vector2.up * (Direction * _speed * Time.deltaTime);
+    }
+
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
-    protected void OnCollisionEnter2D(Collision2D other)
+
+    protected void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(Target))
         {
             Destroy(other.gameObject);
         }
+
         Destroy(gameObject);
     }
 }

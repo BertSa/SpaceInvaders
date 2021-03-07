@@ -9,11 +9,11 @@ public class BulletAlien : BulletScript
         _speed = 5f;
     }
 
-    protected new void OnCollisionEnter2D(Collision2D other)
+    protected new void OnTriggerEnter2D (Collider2D other)
     {
         if (!other.gameObject.CompareTag($"Alien"))
         {
-            base.OnCollisionEnter2D(other);
+            base.OnTriggerEnter2D(other);
         }
     }
 }

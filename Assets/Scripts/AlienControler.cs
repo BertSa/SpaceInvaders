@@ -5,6 +5,9 @@ using UnityEngine;
 public class AlienControler : MonoBehaviour
 {
     [SerializeField] public GameObject bullet;
+    private float _timeStamp;
+    private const float CoolDownPeriodInSeconds = 1;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,10 @@ public class AlienControler : MonoBehaviour
         var x = position.x;
         var y = position.y - 1;
 
-        Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
+        if (_timeStamp <= Time.time)
+        {
+            _timeStamp = Time.time + CoolDownPeriodInSeconds;
+            Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
+        }
     }
 }

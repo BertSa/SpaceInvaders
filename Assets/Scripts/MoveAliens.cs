@@ -19,20 +19,25 @@ public class MoveAliens : MonoBehaviour
 
     public void Update()
     {
-        var instanceEnemiesAtStart = (double) LevelControler.Instance.EnemiesAtStart / 100;
-        var count = LevelControler.Instance.EnemyCount;
-        if (count < (instanceEnemiesAtStart * 5))
-            _speed = 10;
-        else if (count < (instanceEnemiesAtStart * 10))
-            _speed = 5;
-        else if (count < (instanceEnemiesAtStart * 25))
-            _speed = 4;
-        else if (count < (instanceEnemiesAtStart * 50))
-            _speed = 3;
-        else if (count < (instanceEnemiesAtStart * 75))
-            _speed = 2;
-        else
-            _speed = 1;
+        var levelOfAnger = LevelControler.Instance.GetLevelOfAnger();
+        switch (levelOfAnger)
+        {
+            case LevelControler.LevelOfAnger.NotReallyGoodForYou:
+                _speed = 10;
+                break;
+            case LevelControler.LevelOfAnger.Rage:
+                _speed = 5;
+                break;
+            case LevelControler.LevelOfAnger.Mehh:
+                _speed = 4;
+                break;
+            case LevelControler.LevelOfAnger.Normal:
+                _speed = 3;
+                break;
+            default:
+                _speed = 1;
+                break;
+        }
 
         var t = transform;
         if (_movingX)
@@ -63,6 +68,7 @@ public class MoveAliens : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (!LevelControler.IsInitialized) return;
         LevelControler.Instance.EnemyCount--;
     }
 }
