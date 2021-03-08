@@ -5,7 +5,7 @@ public class Invader : MonoBehaviour
     private const float CoolDownPeriodInSeconds = 1;
     private float _timeStamp;
     [SerializeField] public GameObject bullet;
-    public WaveController waveController;
+    public InvadersManager invadersManager;
     public InvaderTypes type;
     public Sprite[] walkStateSprites;
     private int _currentSpriteIndex;
@@ -34,7 +34,7 @@ public class Invader : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!other.gameObject.CompareTag($"Wall")) return;
-        waveController.OnChildrenCollisionEnter();
+        invadersManager.OnChildrenCollisionEnter();
     }
 
     private void OnDestroy()

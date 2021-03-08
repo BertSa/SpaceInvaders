@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class WaveController : MonoBehaviour
+public class InvadersManager : MonoBehaviour
 {
     private static int _direction;
     private static bool _movingX;
@@ -10,12 +11,31 @@ public class WaveController : MonoBehaviour
     private float _max = 5;
     private float _speed = 5;
     private float _previousY;
+    [Range(3, 10)] public int nbOfColumn = 3;
+    public Invader[] invaders;
+    public Transform verticalLayoutGroup;
+    private GameObject[] _col;
 
     void Start()
     {
         _direction = -1;
         _previousY = transform.position.y;
         _movingX = true;
+
+        _col = new GameObject[nbOfColumn];
+        for (var j = 0; j < nbOfColumn; j++)
+        {
+            _col[j] = Instantiate(verticalLayoutGroup.gameObject, transform);
+
+            foreach (var t in invaders)
+            {
+                var instantiate = Instantiate(t, _col[j].transform);
+                instantiate.invadersManager = this;
+            }
+        }
+
+        Invoke(nameof(RemoveLayout), 0.5f);
+
         var rand = Random.Range(_min, _max);
         Invoke(nameof(SelectForFire), rand);
     }
@@ -110,5 +130,14 @@ public class WaveController : MonoBehaviour
         if (!_movingX) return;
         _movingX = false;
         _previousY = transform.position.y;
+    }
+
+    private void RemoveLayout()
+    {
+        for (int i = 0; i < _col.Length; i++)
+        {
+            var layoutGroup = _col[i].GetComponent<VerticalLayoutGroup>();
+            layoutGroup.enabled = false;
+        }
     }
 }

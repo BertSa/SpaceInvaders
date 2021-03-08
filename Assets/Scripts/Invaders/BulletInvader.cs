@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class BulletAlien : BulletScript
+public class BulletInvader : BulletScript
 {
-    public BulletAlien()
+    public BulletInvader()
     {
         Target = "Player";
         Direction = -1;

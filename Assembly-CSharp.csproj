@@ -61,9 +61,9 @@
      <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\DisignPatherns\Singleton.cs" />
      <Compile Include="Assets\Scripts\GameManager8.cs" />
-     <Compile Include="Assets\Scripts\Invaders\BulletAlien.cs" />
+     <Compile Include="Assets\Scripts\Invaders\BulletInvader.cs" />
      <Compile Include="Assets\Scripts\Invaders\Invader.cs" />
-     <Compile Include="Assets\Scripts\Invaders\WaveController.cs" />
+     <Compile Include="Assets\Scripts\Invaders\InvadersManager.cs" />
      <Compile Include="Assets\Scripts\LevelControler.cs" />
      <Compile Include="Assets\Scripts\Player\BulletPlayer.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScript.cs" />
