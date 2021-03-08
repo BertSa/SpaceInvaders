@@ -7,7 +7,7 @@
     {
         _state = state;
         _gameOver = true;
-        GameManager8.Instance.GameIsOver();
+        GameManager.Instance.GameIsOver();
     }
 
     public enum WlState
@@ -24,5 +24,10 @@
     public bool IsGameOver()
     {
         return _gameOver;
+    }
+
+    public void Reset()
+    {
+        _gameOver = false;
     }
 }

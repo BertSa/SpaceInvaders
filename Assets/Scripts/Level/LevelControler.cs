@@ -21,11 +21,11 @@ namespace Level
                 EnemyCount.Instance.MinusOneEnemy();
             }
         }
-
+        
 
         public void LevelCompleted()
         {
-            GameManager8.Instance.NextLevel();
+            GameManager.Instance.NextLevel();
         }
 
         public void SpawnNewPlayer()

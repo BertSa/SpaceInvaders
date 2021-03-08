@@ -7,10 +7,7 @@
 
     public ScoreManager()
     {
-        PlayerPoints = 0;
-        SquidsKilled = 0;
-        CrabsKilled = 0;
-        OctopusKilled = 0;
+        Reset();
     }
 
 
@@ -31,5 +28,13 @@
                 OctopusKilled++;
                 break;
         }
+    }
+
+    public void Reset()
+    {
+        PlayerPoints = 0;
+        SquidsKilled = 0;
+        CrabsKilled = 0;
+        OctopusKilled = 0;
     }
 }

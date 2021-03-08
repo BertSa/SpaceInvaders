@@ -159,7 +159,7 @@ PrefabInstance:
     - target: {fileID: 114110037165574424, guid: e071fc5d9deb1c38793122e2660ff50b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResetGame
+      value: Reset
       objectReference: {fileID: 0}
     - target: {fileID: 114110037165574424, guid: e071fc5d9deb1c38793122e2660ff50b,
         type: 3}
@@ -381,7 +381,6 @@ MonoBehaviour:
   onGameStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  systemPrefabs: []
 --- !u!4 &1801389878
 Transform:
   m_ObjectHideFlags: 0

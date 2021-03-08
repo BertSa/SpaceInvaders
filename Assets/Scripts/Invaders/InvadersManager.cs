@@ -81,6 +81,7 @@ public class InvadersManager : MonoBehaviour
         }
     }
 
+//TODO Make it better
     private void SelectForFire()
     {
         var levelOfAnger = EnemyCount.Instance.GetLevelOfAnger();
