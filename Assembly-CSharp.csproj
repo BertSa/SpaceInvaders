@@ -12,7 +12,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{1ADA3F92-994F-FE0E-B05B-67AD174C5B8E}</ProjectGuid>
+    <ProjectGuid>{435C8792-8CED-684F-1777-1C6A741F16E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -75,85 +75,85 @@
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <Compile Include="Assets\TextSetter.cs" />
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Animation.Runtime">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.PixelPerfect.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.SpriteShape.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Path.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Animation.Triangle.Runtime">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="PsdPlugin">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Psdimporter.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.InternalAPIEngineBridge.001">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Common.Runtime">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.SpriteShape.Runtime">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.PixelPerfect">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Animation.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Common.Editor">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.InternalAPIEditorBridge.001">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvaders/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/opt/unityHub/Unity/Hub/Editor/2019.4.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
