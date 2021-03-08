@@ -58,16 +58,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LifeManager.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\DisignPatherns\Singleton.cs" />
      <Compile Include="Assets\Scripts\GameManager8.cs" />
+     <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\Invaders\BulletInvader.cs" />
      <Compile Include="Assets\Scripts\Invaders\Invader.cs" />
      <Compile Include="Assets\Scripts\Invaders\InvadersManager.cs" />
-     <Compile Include="Assets\Scripts\LevelControler.cs" />
+     <Compile Include="Assets\Scripts\Level\BottomLine.cs" />
+     <Compile Include="Assets\Scripts\Level\EnemyCount.cs" />
+     <Compile Include="Assets\Scripts\Level\LevelControler.cs" />
      <Compile Include="Assets\Scripts\Player\BulletPlayer.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScript.cs" />
+     <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
+     <Compile Include="Assets\TextSetter.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/home/bertsa/workspace/CAL/H21_420_455/SpaceInvader/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

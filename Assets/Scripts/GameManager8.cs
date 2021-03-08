@@ -14,27 +14,28 @@ public class GameManager8 : Singleton<GameManager8>
 {
     public enum GameState
     {
-        PREGAME,
-        RUNNING,
-        PAUSE
+        Pregame,
+        Running,
+        Pause,
+        Ending
     }
 
-    public EventGameState OnGameStateChanged;
+    public EventGameState onGameStateChanged;
     public GameObject[] systemPrefabs;
 
     private string _currentLevelName = string.Empty;
     private readonly List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
 
     private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
-    private int indexScene;
-    private readonly string[] listScene = {"SampleScene", "sas"};
+    private int _indexScene;
+    private readonly string[] _listScene = {"SampleScene"};
 
-    public GameState CurrentGameState { get; private set; } = GameState.PREGAME;
+    public GameState CurrentGameState { get; private set; } = GameState.Pregame;
 
     public void Start()
     {
         DontDestroyOnLoad(this);
-        InstanciateSystemPrefab();
+        InstantiateSystemPrefab();
     }
 
     protected override void OnDestroy()
@@ -48,12 +49,11 @@ public class GameManager8 : Singleton<GameManager8>
         }
     }
 
-    private void InstanciateSystemPrefab()
+    private void InstantiateSystemPrefab()
     {
-        GameObject prefabInstance;
         for (var i = 0; i < systemPrefabs.Length; i++)
         {
-            prefabInstance = Instantiate(systemPrefabs[i]);
+            var prefabInstance = Instantiate(systemPrefabs[i]);
             _instanceSystemPrefabs.Add(prefabInstance);
         }
     }
@@ -91,7 +91,7 @@ public class GameManager8 : Singleton<GameManager8>
         {
             _loadOperations.Remove(ao);
             // Ici on peut aviser les composantes qui ont besoin de savoir que le level est loadé
-            if (_loadOperations.Count == 0) UpdateGameState(GameState.RUNNING);
+            if (_loadOperations.Count == 0) UpdateGameState(GameState.Running);
         }
 
         print("load completed");
@@ -108,39 +108,72 @@ public class GameManager8 : Singleton<GameManager8>
         CurrentGameState = newGameState;
         switch (CurrentGameState)
         {
-            case GameState.PREGAME:
+            case GameState.Pregame:
                 break;
-            case GameState.RUNNING:
+            case GameState.Running:
                 break;
-            case GameState.PAUSE:
+            case GameState.Pause:
+                break;
+            case GameState.Ending:
                 break;
         }
 
-        OnGameStateChanged.Invoke(CurrentGameState, previousGameState);
+        onGameStateChanged.Invoke(CurrentGameState, previousGameState);
     }
 
     public void StartGame()
     {
-        LoadLevel(listScene[indexScene]);
+        LoadLevel(_listScene[_indexScene]);
     }
 
     public void PauseGame()
     {
-        UpdateGameState(GameState.PAUSE);
+        UpdateGameState(GameState.Pause);
         Time.timeScale = 0;
     }
 
     public void ResumeGame()
     {
-        UpdateGameState(GameState.RUNNING);
+        UpdateGameState(GameState.Running);
         Time.timeScale = 1;
     }
 
     public void ResetGame()
     {
-        UnloadLevel(listScene[indexScene]);
-        indexScene = 0;
-        LoadLevel(listScene[indexScene]);
-        Time.timeScale = 1;
+        UnloadLevel(_listScene[_indexScene]);
+        _indexScene = 0;
+        LifeManager.Instance.Reset();
+    }
+
+    public void GameIsOver()
+    {
+        UpdateGameState(GameState.Ending);
+        Time.timeScale = 0;
+    }
+
+    public void LevelStats()
+    {
+        UnloadLevel(_listScene[_indexScene]);
+        LoadLevel("GameOver");
+    }
+
+    public void UnloadActualLevel()
+    {
+        UpdateGameState(GameState.Pregame);
+        ResetGame();
+    }
+
+    public void NextLevel()
+    {
+        Time.timeScale = 0;
+        if (_indexScene >= _listScene.Length-1)
+        {
+            GameOver.Instance.SetOver(GameOver.WlState.Win);
+        }
+        else
+        {
+            _indexScene++;
+            LoadLevel(_listScene[_indexScene]);
+        }
     }
 }

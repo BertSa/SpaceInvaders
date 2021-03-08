@@ -42,19 +42,19 @@ public class InvadersManager : MonoBehaviour
 
     void Update()
     {
-        var levelOfAnger = LevelControler.Instance.GetLevelOfAnger();
+        var levelOfAnger = EnemyCount.Instance.GetLevelOfAnger();
         switch (levelOfAnger)
         {
-            case LevelControler.LevelOfAnger.NotReallyGoodForYou:
+            case EnemyCount.LevelOfAnger.NotReallyGoodForYou:
                 _speed = 10;
                 break;
-            case LevelControler.LevelOfAnger.Rage:
+            case EnemyCount.LevelOfAnger.Rage:
                 _speed = 5;
                 break;
-            case LevelControler.LevelOfAnger.Mehh:
+            case EnemyCount.LevelOfAnger.Mehh:
                 _speed = 4;
                 break;
-            case LevelControler.LevelOfAnger.Normal:
+            case EnemyCount.LevelOfAnger.Normal:
                 _speed = 3;
                 break;
             default:
@@ -83,25 +83,25 @@ public class InvadersManager : MonoBehaviour
 
     private void SelectForFire()
     {
-        var levelOfAnger = LevelControler.Instance.GetLevelOfAnger();
+        var levelOfAnger = EnemyCount.Instance.GetLevelOfAnger();
         switch (levelOfAnger)
         {
-            case LevelControler.LevelOfAnger.NotReallyGoodForYou:
+            case EnemyCount.LevelOfAnger.NotReallyGoodForYou:
             {
                 _max = 1;
                 break;
             }
-            case LevelControler.LevelOfAnger.Rage:
+            case EnemyCount.LevelOfAnger.Rage:
             {
                 _max = 2;
                 break;
             }
-            case LevelControler.LevelOfAnger.Mehh:
+            case EnemyCount.LevelOfAnger.Mehh:
             {
                 _max = 3;
                 break;
             }
-            case LevelControler.LevelOfAnger.Normal:
+            case EnemyCount.LevelOfAnger.Normal:
             {
                 _max = 4;
                 break;

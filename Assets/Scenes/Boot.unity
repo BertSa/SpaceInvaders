@@ -132,6 +132,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1495308988550548, guid: e071fc5d9deb1c38793122e2660ff50b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114110037165574424, guid: e071fc5d9deb1c38793122e2660ff50b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -319,6 +323,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 1112959873859156874, guid: e071fc5d9deb1c38793122e2660ff50b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161658789633736928, guid: e071fc5d9deb1c38793122e2660ff50b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -180
+      objectReference: {fileID: 0}
     - target: {fileID: 2085047855830107400, guid: e071fc5d9deb1c38793122e2660ff50b,
         type: 3}
       propertyPath: pauseMenu
@@ -342,6 +356,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1801389878}
   - component: {fileID: 1801389877}
+  - component: {fileID: 1801389880}
+  - component: {fileID: 1801389881}
+  - component: {fileID: 1801389879}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -361,20 +378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afee897d68a0f312934508958dc2f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnGameStateChanged:
+  onGameStateChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   systemPrefabs: []
 --- !u!4 &1801389878
 Transform:
@@ -390,3 +396,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1801389879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801389876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e34317272a497569f0311fc0811287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1801389880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801389876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee17274d1074523485820deb532897f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1801389881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801389876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a83aa932c92615b5cf766b01d8377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1934826579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1112959873859156874, guid: e071fc5d9deb1c38793122e2660ff50b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1162632450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1934826580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934826579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6717a1dd876b4e58e197b7493365ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wlTitle: {fileID: 0}
+  scoreValue: {fileID: 0}
+  squidKilled: {fileID: 0}
+  crabKilled: {fileID: 0}
+  octopusKilled: {fileID: 0}

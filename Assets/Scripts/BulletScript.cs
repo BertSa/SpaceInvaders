@@ -28,8 +28,12 @@ public class BulletScript : MonoBehaviour
         if (other.gameObject.CompareTag(Target))
         {
             Destroy(other.gameObject);
+            Destroy(gameObject);
         }
 
-        Destroy(gameObject);
+        if (other.CompareTag($"Bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

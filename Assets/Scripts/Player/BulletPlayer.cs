@@ -6,6 +6,7 @@ public class BulletPlayer : BulletScript
     {
         Target = "Invaders";
         Direction = 1;
+        _speed = 20;
     }
 
     

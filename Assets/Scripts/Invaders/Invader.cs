@@ -1,3 +1,4 @@
+using Level;
 using UnityEngine;
 
 public class Invader : MonoBehaviour
@@ -40,7 +41,7 @@ public class Invader : MonoBehaviour
     private void OnDestroy()
     {
         if (!LevelControler.IsInitialized) return;
-        LevelControler.Instance.EnemyCount--;
+            LevelControler.Instance.OnEnemyKill(type);
     }
 
     public void PlayAnimation()
