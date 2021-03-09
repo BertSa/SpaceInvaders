@@ -1,5 +1,4 @@
 ﻿using System;
-using Level;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -14,15 +13,15 @@ namespace Invaders
         private float _max = 5;
         private float _speed = 5;
         private float _previousY;
-        private EnemyCount _enemyCount;
+        private InvadersCount _invadersCount;
         [Range(3, 10)] public int nbOfColumn = 3;
         public Invader[] invaders;
         public Transform verticalLayoutGroup;
         private GameObject[] _col;
 
-        void Start()
+        public void Start()
         {
-            _enemyCount = GetComponent<EnemyCount>();
+            _invadersCount = GetComponent<InvadersCount>();
             _direction = -1;
             _previousY = transform.position.y;
             _movingX = true;
@@ -47,19 +46,19 @@ namespace Invaders
 
         void Update()
         {
-            var levelOfAnger = _enemyCount.GetLevelOfAnger();
+            var levelOfAnger = _invadersCount.GetLevelOfAnger();
             switch (levelOfAnger)
             {
-                case EnemyCount.LevelOfAnger.NotReallyGoodForYou:
+                case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
                     _speed = 10;
                     break;
-                case EnemyCount.LevelOfAnger.Rage:
+                case InvadersCount.LevelOfAnger.Rage:
                     _speed = 5;
                     break;
-                case EnemyCount.LevelOfAnger.Mehh:
+                case InvadersCount.LevelOfAnger.Mehh:
                     _speed = 4;
                     break;
-                case EnemyCount.LevelOfAnger.Normal:
+                case InvadersCount.LevelOfAnger.Normal:
                     _speed = 3;
                     break;
                 default:
@@ -89,25 +88,25 @@ namespace Invaders
 //TODO Make it better
         private void SelectForFire()
         {
-            var levelOfAnger = _enemyCount.GetLevelOfAnger();
+            var levelOfAnger = _invadersCount.GetLevelOfAnger();
             switch (levelOfAnger)
             {
-                case EnemyCount.LevelOfAnger.NotReallyGoodForYou:
+                case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
                 {
                     _max = 1;
                     break;
                 }
-                case EnemyCount.LevelOfAnger.Rage:
+                case InvadersCount.LevelOfAnger.Rage:
                 {
                     _max = 2;
                     break;
                 }
-                case EnemyCount.LevelOfAnger.Mehh:
+                case InvadersCount.LevelOfAnger.Mehh:
                 {
                     _max = 3;
                     break;
                 }
-                case EnemyCount.LevelOfAnger.Normal:
+                case InvadersCount.LevelOfAnger.Normal:
                 {
                     _max = 4;
                     break;
@@ -125,7 +124,8 @@ namespace Invaders
             var column = transform.GetChild(randomCol);
             if (column.childCount > 0)
             {
-                column.GetChild(column.childCount - 1).gameObject.GetComponent<Invader>().Invoke(nameof(Invader.Fire), 0f);
+                column.GetChild(column.childCount - 1).gameObject.GetComponent<Invader>()
+                    .Invoke(nameof(Invader.Fire), 0f);
             }
 
             Invoke(nameof(SelectForFire), rand);
@@ -149,7 +149,7 @@ namespace Invaders
 
         public void MinusOneEnemy()
         {
-            _enemyCount.MinusOneEnemy();
+            _invadersCount.MinusOneEnemy();
         }
     }
 }

@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
-public class BottomLine : MonoBehaviour
+namespace Level
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public class BottomLine : MonoBehaviour
     {
-        if (GameOver.IsInitialized)
+        private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!GameOver.IsInitialized) return;
             if (other.gameObject.CompareTag($"Invaders"))
             {
-                GameOver.Instance.SetOver(GameOver.WlState.Lost);
+                GameOver.Instance.SetOverWithWinner(GameOver.WlState.Lost);
             }
         }
     }

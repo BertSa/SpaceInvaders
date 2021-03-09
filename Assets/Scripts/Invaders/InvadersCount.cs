@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Invaders
 {
-    public class EnemyCount : MonoBehaviour
+    public class InvadersCount : MonoBehaviour
     {
         private int _enemyCount;
         private int _enemiesAtStart;

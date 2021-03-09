@@ -1,5 +1,6 @@
-﻿using Invaders;
-using UnityEngine;
+﻿using DesignPatterns;
+using Invaders;
+using static Invaders.Invader.InvaderTypes;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
@@ -18,19 +19,20 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         switch (type)
         {
-            case Invader.InvaderTypes.Squid:
+            case Squid:
                 _playerPoints += 10;
                 _squidsKilled++;
                 break;
-            case Invader.InvaderTypes.Crab:
+            case Crab:
                 _playerPoints += 20;
                 _crabsKilled++;
                 break;
-            case Invader.InvaderTypes.Octopus:
+            case Octopus:
                 _playerPoints += 30;
                 _octopusKilled++;
                 break;
         }
+
         print(_playerPoints);
     }
 

@@ -1,19 +1,22 @@
-﻿public class LifeManager : Singleton<LifeManager>
+﻿using DesignPatterns;
+
+public class LifeManager : Singleton<LifeManager>
 {
-    private static readonly int DefaultAmountOfLives = 3;
+    private const int DefaultAmountOfLives = 3;
     private int _lives;
 
-    void Start()
+    private void Start()
     {
         _lives = DefaultAmountOfLives;
     }
 
     public void OnPlayerKilled()
     {
+        if (GameManager.Instance.CurrentGameState != GameManager.GameState.Running) return;
         _lives--;
-        if (_lives == 0)
+        if (_lives <= 0)
         {
-            GameOver.Instance.SetOver(GameOver.WlState.Lost);
+            GameOver.Instance.SetOverWithWinner(GameOver.WlState.Lost);
         }
     }
 

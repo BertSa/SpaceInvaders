@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Player;
 using UnityEngine;
 
 namespace Level
@@ -7,27 +7,19 @@ namespace Level
     {
         public GameObject spawn;
         public PlayerScript player;
-        private PlayerScript _playerScript;
-        
+        private PlayerScript _instantiatedPlayer;
+
         private void Start()
         {
             Time.timeScale = 1;
             SpawnNewPlayer();
         }
 
+//TODO animation when player respawn
         public void SpawnNewPlayer()
         {
-            _playerScript = Instantiate(player, spawn.transform);
-            _playerScript.LevelManager = this;
+            _instantiatedPlayer = Instantiate(player, spawn.transform);
+            _instantiatedPlayer.LevelManager = this;
         }
-
-        private void OnDestroy()
-        {
-            // Destroy(spawn);
-            // _playerScript.enabled = false;
-            // var findGameObjectWithTag = GameObject.FindGameObjectWithTag($"MainCamera");
-            // Destroy(findGameObjectWithTag);
-        }
-        
     }
 }

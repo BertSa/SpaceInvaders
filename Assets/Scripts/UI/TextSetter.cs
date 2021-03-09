@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextSetter : MonoBehaviour
+namespace UI
 {
-    public Text wlTitle;
-    public Text scoreValue;
-    public Text squidKilled;
-    public Text crabKilled;
-    public Text octopusKilled;
-
-    private void Update()
+    public class TextSetter : MonoBehaviour
     {
-        try
+        public Text wlTitle;
+        public Text scoreValue;
+        public Text squidKilled;
+        public Text crabKilled;
+        public Text octopusKilled;
+
+        private void Update()
         {
-            if (GameOver.IsInitialized)
+            try
+            {
+                if (!ScoreManager.IsInitialized || !GameOver.IsInitialized) return;
+                
                 wlTitle.text = GameOver.Instance.GetState() == GameOver.WlState.Win ? "You Win!!!!" : "You Lost...";
-            if (!ScoreManager.IsInitialized) return;
-            scoreValue.text = ScoreManager.Instance.GetPlayerPoints().ToString();
-            squidKilled.text = ScoreManager.Instance.GetSquidKilled().ToString();
-            crabKilled.text = ScoreManager.Instance.GetCrabKilled().ToString();
-            octopusKilled.text = ScoreManager.Instance.GetOctopusKilled().ToString();
-        }
-        catch (NullReferenceException e)
-        {
-            Console.WriteLine("NRE:" + e);
+                scoreValue.text = ScoreManager.Instance.GetPlayerPoints().ToString();
+                squidKilled.text = ScoreManager.Instance.GetSquidKilled().ToString();
+                crabKilled.text = ScoreManager.Instance.GetCrabKilled().ToString();
+                octopusKilled.text = ScoreManager.Instance.GetOctopusKilled().ToString();
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("NRE:" + e);
+            }
         }
     }
 }

@@ -148,8 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a26135f21e468f82b03c8973d16367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionInvaders: {fileID: 5086755991551345616, guid: 9acb7cbd2b30dd9dda4497a9ba3d1181,
+    type: 3}
   bullet: {fileID: 1908072092881330581, guid: 8052c516f3ef42b1a959776fc9a03eb5, type: 3}
-  waveController: {fileID: 0}
+  invadersManager: {fileID: 0}
   type: 0
   walkStateSprites:
   - {fileID: 21300000, guid: d97fd65c21f6a86459fd36e178a05542, type: 3}

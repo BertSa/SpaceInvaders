@@ -6,12 +6,14 @@ namespace Invaders
     {
         private const float CoolDownPeriodInSeconds = 1;
         private float _timeStamp;
+        public InvadersExplosion invadersExplosion;
         [SerializeField] public GameObject bullet;
         public InvadersManager invadersManager;
         public InvaderTypes type;
         public Sprite[] walkStateSprites;
         private int _currentSpriteIndex;
         private SpriteRenderer _spriteRender;
+        private readonly object _syncLock = new Object();
 
 
         public void Start()
@@ -22,29 +24,19 @@ namespace Invaders
 
         public void Fire()
         {
+            if (!(_timeStamp <= Time.time)) return;
             var position = transform.position;
             var x = position.x;
             var y = position.y - 1;
 
-            if (_timeStamp <= Time.time)
-            {
-                _timeStamp = Time.time + CoolDownPeriodInSeconds;
-                Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
-            }
+            _timeStamp = Time.time + CoolDownPeriodInSeconds;
+            Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (!other.gameObject.CompareTag($"Wall")) return;
             invadersManager.OnChildrenCollisionEnter();
-        }
-
-        private void OnDestroy()
-        {
-            if (!ScoreManager.IsInitialized&&GameManager.Instance.CurrentGameState!=GameManager.GameState.Running) return;
-            ScoreManager.Instance.AddPointsPerTypes(type);
-            invadersManager.MinusOneEnemy();
-            
         }
 
         public void PlayAnimation()
@@ -54,6 +46,7 @@ namespace Invaders
             Invoke(nameof(PlayAnimation), 0.5f);
         }
 
+//TODO speed of WalkAnimation
         private void ChangeWalkState()
         {
             _currentSpriteIndex++;
@@ -67,6 +60,21 @@ namespace Invaders
             Octopus,
             Crab,
             Squid
+        }
+
+        public void Kill()
+        {
+            if (!ScoreManager.IsInitialized) return;
+            lock (_syncLock)
+            {
+                ScoreManager.Instance.AddPointsPerTypes(type);
+                var position = transform.position;
+                Instantiate(invadersExplosion, new Vector3(position.x, position.y),
+                    Quaternion.identity);
+                invadersManager.MinusOneEnemy();
+            }
+
+            Destroy(gameObject);
         }
     }
 }

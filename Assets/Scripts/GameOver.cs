@@ -1,14 +1,17 @@
-﻿public class GameOver : Singleton<GameOver>
+﻿using DesignPatterns;
+
+public class GameOver : Singleton<GameOver>
 {
     private WlState _state;
     private bool _gameOver;
 
-    public void SetOver(WlState state)
+    public void SetOverWithWinner(WlState state)
     {
         _state = state;
         _gameOver = true;
         GameManager.Instance.GameIsOver();
     }
+    
 
     public enum WlState
     {
@@ -19,11 +22,6 @@
     public WlState GetState()
     {
         return _state;
-    }
-
-    public bool IsGameOver()
-    {
-        return _gameOver;
     }
 
     public void Reset()
