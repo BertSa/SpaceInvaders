@@ -4,10 +4,14 @@ using static Invaders.Invader.InvaderTypes;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    private int _playerPoints;
-    private int _squidsKilled;
-    private int _crabsKilled;
-    private int _octopusKilled;
+    #region EncapsulatedFields
+
+    public int PlayerPoints { get; private set; }
+    public int SquidsKilled { get; private set; }
+    public int CrabsKilled { get; private set; }
+    public int OctopusKilled { get; private set; }
+
+    #endregion
 
     public ScoreManager()
     {
@@ -15,52 +19,34 @@ public class ScoreManager : Singleton<ScoreManager>
     }
 
 
+    #region PublicMethods
+
     public void AddPointsPerTypes(Invader.InvaderTypes type)
     {
         switch (type)
         {
             case Squid:
-                _playerPoints += 10;
-                _squidsKilled++;
+                PlayerPoints += 10;
+                SquidsKilled++;
                 break;
             case Crab:
-                _playerPoints += 20;
-                _crabsKilled++;
+                PlayerPoints += 20;
+                CrabsKilled++;
                 break;
             case Octopus:
-                _playerPoints += 30;
-                _octopusKilled++;
+                PlayerPoints += 30;
+                OctopusKilled++;
                 break;
         }
-
-        print(_playerPoints);
     }
 
     public void Reset()
     {
-        _playerPoints = 0;
-        _squidsKilled = 0;
-        _crabsKilled = 0;
-        _octopusKilled = 0;
+        PlayerPoints = 0;
+        SquidsKilled = 0;
+        CrabsKilled = 0;
+        OctopusKilled = 0;
     }
 
-    public int GetPlayerPoints()
-    {
-        return _playerPoints;
-    }
-
-    public int GetSquidKilled()
-    {
-        return _squidsKilled;
-    }
-
-    public int GetCrabKilled()
-    {
-        return _crabsKilled;
-    }
-
-    public int GetOctopusKilled()
-    {
-        return _octopusKilled;
-    }
+    #endregion
 }

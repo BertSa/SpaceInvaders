@@ -4,8 +4,14 @@ namespace Invaders
 {
     public class InvadersCount : MonoBehaviour
     {
+        #region PrivateFields
+
         private int _enemyCount;
         private int _enemiesAtStart;
+
+        #endregion
+
+        #region PrivateMethodes
 
         private void Start()
         {
@@ -17,6 +23,10 @@ namespace Invaders
             _enemyCount = GameObject.FindGameObjectsWithTag("Invaders").Length;
             _enemiesAtStart = GameObject.FindGameObjectsWithTag("Invaders").Length;
         }
+
+        #endregion
+
+        #region PublicMethodes
 
         public void MinusOneEnemy()
         {
@@ -41,6 +51,10 @@ namespace Invaders
             return LevelOfAnger.Fun;
         }
 
+        #endregion
+
+        #region Enums
+
         public enum LevelOfAnger
         {
             Fun,
@@ -49,5 +63,7 @@ namespace Invaders
             Rage,
             NotReallyGoodForYou
         }
+
+        #endregion
     }
 }

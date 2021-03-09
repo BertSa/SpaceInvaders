@@ -5,10 +5,7 @@ public class LifeManager : Singleton<LifeManager>
     private const int DefaultAmountOfLives = 3;
     private int _lives;
 
-    private void Start()
-    {
-        _lives = DefaultAmountOfLives;
-    }
+    #region PublicMethods
 
     public void OnPlayerKilled()
     {
@@ -24,4 +21,17 @@ public class LifeManager : Singleton<LifeManager>
     {
         _lives = DefaultAmountOfLives;
     }
+
+    #endregion
+
+    #region PublicMethods
+
+    private void Start()
+    {
+        Reset();
+    }
+
+    #endregion
+
+    
 }

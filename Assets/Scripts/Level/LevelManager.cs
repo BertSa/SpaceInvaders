@@ -5,9 +5,20 @@ namespace Level
 {
     public class LevelManager : MonoBehaviour
     {
-        public GameObject spawn;
-        public PlayerScript player;
-        private PlayerScript _instantiatedPlayer;
+        #region SerializedFields
+
+        [SerializeField] private GameObject spawn;
+        [SerializeField] private Player.Player player;
+
+        #endregion
+
+        #region PrivateFields
+
+        private Player.Player _instantiatedPlayer;
+
+        #endregion
+
+        #region PrivateMethods
 
         private void Start()
         {
@@ -15,11 +26,17 @@ namespace Level
             SpawnNewPlayer();
         }
 
-//TODO animation when player respawn
+        #endregion
+
+        #region PublicMethods
+
+        //TODO animation when player respawn
         public void SpawnNewPlayer()
         {
             _instantiatedPlayer = Instantiate(player, spawn.transform);
-            _instantiatedPlayer.LevelManager = this;
+            _instantiatedPlayer.levelManager = this;
         }
+
+        #endregion
     }
 }

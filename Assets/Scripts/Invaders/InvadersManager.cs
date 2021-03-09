@@ -7,19 +7,46 @@ namespace Invaders
 {
     public class InvadersManager : MonoBehaviour
     {
-        private static int _direction;
-        private static bool _movingX;
+        #region PrivateFields
+
+        private int _direction;
+        private bool _movingX;
         private float _min = 0;
         private float _max = 5;
         private float _speed = 5;
         private float _previousY;
         private InvadersCount _invadersCount;
-        [Range(3, 10)] public int nbOfColumn = 3;
-        public Invader[] invaders;
-        public Transform verticalLayoutGroup;
         private GameObject[] _col;
 
-        public void Start()
+        #endregion
+
+        #region SerializedFields
+
+        [SerializeField] private Transform verticalLayoutGroup;
+        [SerializeField] [Range(3, 10)] private int nbOfColumn = 3;
+        [SerializeField] private Invader[] invaders;
+
+        #endregion
+
+        #region PublicMethods
+
+        public void OnChildrenCollisionEnter()
+        {
+            if (!_movingX) return;
+            _movingX = false;
+            _previousY = transform.position.y;
+        }
+
+        public void MinusOneEnemy()
+        {
+            _invadersCount.MinusOneEnemy();
+        }
+
+        #endregion
+
+        #region PrivateMethods
+
+        private void Start()
         {
             _invadersCount = GetComponent<InvadersCount>();
             _direction = -1;
@@ -44,7 +71,7 @@ namespace Invaders
             Invoke(nameof(SelectForFire), rand);
         }
 
-        void Update()
+        private void Update()
         {
             var levelOfAnger = _invadersCount.GetLevelOfAnger();
             switch (levelOfAnger)
@@ -85,7 +112,7 @@ namespace Invaders
             }
         }
 
-//TODO Make it better
+        //TODO Make it better
         private void SelectForFire()
         {
             var levelOfAnger = _invadersCount.GetLevelOfAnger();
@@ -131,25 +158,15 @@ namespace Invaders
             Invoke(nameof(SelectForFire), rand);
         }
 
-        public void OnChildrenCollisionEnter()
-        {
-            if (!_movingX) return;
-            _movingX = false;
-            _previousY = transform.position.y;
-        }
-
         private void RemoveLayout()
         {
-            for (int i = 0; i < _col.Length; i++)
+            foreach (var t in _col)
             {
-                var layoutGroup = _col[i].GetComponent<VerticalLayoutGroup>();
+                var layoutGroup = t.GetComponent<VerticalLayoutGroup>();
                 layoutGroup.enabled = false;
             }
         }
 
-        public void MinusOneEnemy()
-        {
-            _invadersCount.MinusOneEnemy();
-        }
+        #endregion
     }
 }

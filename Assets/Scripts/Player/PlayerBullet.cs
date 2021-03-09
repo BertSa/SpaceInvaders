@@ -5,15 +5,21 @@ namespace Player
 {
     public class PlayerBullet : MonoBehaviour
     {
+        #region PrivateFields
+
         private readonly float _speed;
         private readonly string _target;
         private Rigidbody2D _bullet;
+
+        #endregion
 
         public PlayerBullet()
         {
             _speed = 20f;
             _target = "Invaders";
         }
+
+        #region PrivateMethods
 
         public void Start()
         {
@@ -30,7 +36,7 @@ namespace Player
             Destroy(gameObject);
         }
 
-        protected void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag(_target))
             {
@@ -44,5 +50,7 @@ namespace Player
                 Destroy(gameObject);
             }
         }
+
+        #endregion
     }
 }

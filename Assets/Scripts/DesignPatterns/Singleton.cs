@@ -4,33 +4,25 @@ namespace DesignPatterns
 {
     public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        private static T _instance;
+        public static T Instance { get; private set; }
 
-        public static T Instance
-        {
-            get { return _instance; }
-        }
-
-        public static bool IsInitialized
-        {
-            get { return _instance != null; }
-        }
+        public static bool IsInitialized => Instance != null;
 
         protected virtual void Awake()
         {
-            if (_instance != null)
+            if (Instance != null)
             {
                 print("[Singleton] trying to instantiate a second instance of singleton class");
                 return;
             }
 
-            _instance = (T) this;
+            Instance = (T) this;
         }
 
         protected virtual void OnDestroy()
         {
-            if (_instance == this)
-                _instance = null;
+            if (Instance == this)
+                Instance = null;
         }
     }
 }

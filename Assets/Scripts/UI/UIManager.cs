@@ -6,18 +6,23 @@ namespace UI
 {
     public class UIManager : Singleton<UIManager>
     {
+        #region SerializedFields
+
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject gameOver;
         [SerializeField] private GameObject dummyCamera;
+        [SerializeField] private GameObject levelCamera;
+
+        #endregion
 
 
-        public void Start()
+        private void Start()
         {
             GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
         }
 
-//TODO game ui
+        //TODO game ui
         private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
         {
             if (previousState == Pregame && currentState == Running ||
@@ -27,6 +32,7 @@ namespace UI
                 dummyCamera.gameObject.SetActive(false);
                 pauseMenu.gameObject.SetActive(false);
                 gameOver.gameObject.SetActive(false);
+                levelCamera.gameObject.SetActive(true);
             }
 
             if (previousState == Running && currentState == Pause)
@@ -44,10 +50,11 @@ namespace UI
                 gameOver.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(true);
                 dummyCamera.gameObject.SetActive(true);
+                levelCamera.gameObject.SetActive(false);
             }
         }
 
-        public void Update()
+        private void Update()
         {
             switch (GameManager.Instance.CurrentGameState)
             {

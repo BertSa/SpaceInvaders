@@ -6,28 +6,26 @@ namespace UI
 {
     public class TextSetter : MonoBehaviour
     {
-        public Text wlTitle;
-        public Text scoreValue;
-        public Text squidKilled;
-        public Text crabKilled;
-        public Text octopusKilled;
+        #region SerializedFields
 
-        private void Update()
+        [SerializeField] private Text wlTitle;
+        [SerializeField] private Text scoreValue;
+        [SerializeField] private Text squidKilled;
+        [SerializeField] private Text crabKilled;
+        [SerializeField] private Text octopusKilled;
+
+        #endregion
+
+
+        private void OnEnable()
         {
-            try
-            {
-                if (!ScoreManager.IsInitialized || !GameOver.IsInitialized) return;
-                
-                wlTitle.text = GameOver.Instance.GetState() == GameOver.WlState.Win ? "You Win!!!!" : "You Lost...";
-                scoreValue.text = ScoreManager.Instance.GetPlayerPoints().ToString();
-                squidKilled.text = ScoreManager.Instance.GetSquidKilled().ToString();
-                crabKilled.text = ScoreManager.Instance.GetCrabKilled().ToString();
-                octopusKilled.text = ScoreManager.Instance.GetOctopusKilled().ToString();
-            }
-            catch (NullReferenceException e)
-            {
-                Console.WriteLine("NRE:" + e);
-            }
+            if (!ScoreManager.IsInitialized || !GameOver.IsInitialized) return;
+
+            wlTitle.text = GameOver.Instance.GetState() == GameOver.WlState.Win ? "You Win!!!!" : "You Lost...";
+            scoreValue.text = ScoreManager.Instance.PlayerPoints.ToString();
+            squidKilled.text = ScoreManager.Instance.SquidsKilled.ToString();
+            crabKilled.text = ScoreManager.Instance.CrabsKilled.ToString();
+            octopusKilled.text = ScoreManager.Instance.OctopusKilled.ToString();
         }
     }
 }

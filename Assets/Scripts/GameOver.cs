@@ -11,13 +11,6 @@ public class GameOver : Singleton<GameOver>
         _gameOver = true;
         GameManager.Instance.GameIsOver();
     }
-    
-
-    public enum WlState
-    {
-        Win,
-        Lost
-    }
 
     public WlState GetState()
     {
@@ -28,4 +21,14 @@ public class GameOver : Singleton<GameOver>
     {
         _gameOver = false;
     }
+
+    #region Enums
+
+    public enum WlState
+    {
+        Win,
+        Lost
+    }
+
+    #endregion
 }

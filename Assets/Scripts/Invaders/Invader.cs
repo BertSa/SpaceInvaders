@@ -4,23 +4,33 @@ namespace Invaders
 {
     public class Invader : MonoBehaviour
     {
+        #region ReadOnlyAndConst
+
         private const float CoolDownPeriodInSeconds = 1;
-        private float _timeStamp;
-        public InvadersExplosion invadersExplosion;
-        [SerializeField] public GameObject bullet;
-        public InvadersManager invadersManager;
-        public InvaderTypes type;
-        public Sprite[] walkStateSprites;
-        private int _currentSpriteIndex;
-        private SpriteRenderer _spriteRender;
         private readonly object _syncLock = new Object();
 
+        #endregion
 
-        public void Start()
-        {
-            _spriteRender = GetComponent<SpriteRenderer>();
-            Invoke(nameof(PlayAnimation), 0.5f);
-        }
+        #region SerializedFields
+
+        [SerializeField] private InvadersExplosion invadersExplosion;
+        [SerializeField] private GameObject bullet;
+        [SerializeField] private InvaderTypes type;
+        [SerializeField] private Sprite[] walkStateSprites;
+        [SerializeField] public InvadersManager invadersManager;
+
+        #endregion
+
+        #region PrivateFields
+
+        private float _timeStamp;
+        private SpriteRenderer _spriteRender;
+        private int _currentSpriteIndex;
+
+        #endregion
+
+
+        #region PublicMethods
 
         public void Fire()
         {
@@ -31,35 +41,6 @@ namespace Invaders
 
             _timeStamp = Time.time + CoolDownPeriodInSeconds;
             Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
-        }
-
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            if (!other.gameObject.CompareTag($"Wall")) return;
-            invadersManager.OnChildrenCollisionEnter();
-        }
-
-        public void PlayAnimation()
-        {
-            ChangeWalkState();
-
-            Invoke(nameof(PlayAnimation), 0.5f);
-        }
-
-//TODO speed of WalkAnimation
-        private void ChangeWalkState()
-        {
-            _currentSpriteIndex++;
-            if (_currentSpriteIndex >= walkStateSprites.Length) _currentSpriteIndex = 0;
-
-            _spriteRender.sprite = (walkStateSprites[_currentSpriteIndex]);
-        }
-
-        public enum InvaderTypes
-        {
-            Octopus,
-            Crab,
-            Squid
         }
 
         public void Kill()
@@ -76,5 +57,51 @@ namespace Invaders
 
             Destroy(gameObject);
         }
+
+        #endregion
+
+        #region PrivateMethodes
+
+        private void Start()
+        {
+            _spriteRender = GetComponent<SpriteRenderer>();
+            Invoke(nameof(PlayAnimation), 0.5f);
+        }
+
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (!other.gameObject.CompareTag($"Wall")) return;
+            invadersManager.OnChildrenCollisionEnter();
+        }
+
+        private void PlayAnimation()
+        {
+            ChangeWalkState();
+
+            Invoke(nameof(PlayAnimation), 0.5f);
+        }
+
+//TODO speed of WalkAnimation
+        private void ChangeWalkState()
+        {
+            _currentSpriteIndex++;
+            if (_currentSpriteIndex >= walkStateSprites.Length) _currentSpriteIndex = 0;
+
+            _spriteRender.sprite = (walkStateSprites[_currentSpriteIndex]);
+        }
+
+        #endregion
+
+        #region Enums
+
+        public enum InvaderTypes
+        {
+            Octopus,
+            Crab,
+            Squid
+        }
+
+        #endregion
     }
 }
