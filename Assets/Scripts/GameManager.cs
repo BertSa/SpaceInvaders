@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
 
     private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
     private int _indexScene;
-    private readonly string[] _listScene = {"Level01","Level02"};
+    private readonly string[] _listScene = {"Level01", "Level02"};
 
     public GameState CurrentGameState { get; private set; } = GameState.Pregame;
 
@@ -138,15 +138,36 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
     }
 
-    private void ResetGame()
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void BackToMenu()
+    {
+        UpdateGameState(GameState.Pregame);
+        UnloadLevel(_listScene[_indexScene]);
+        Invoke(nameof(Reset), 0.5f);
+    }
+
+    public void ResetGame()
+    {
+        UnloadLevel(_listScene[_indexScene]);
+        Invoke(nameof(Restart), 0.1f);
+        _indexScene = 0;
+        StartGame();
+        Invoke(nameof(Yeds), 0.1f);
+    }
+
+
+    private void Yeds()
+    {
+        UpdateGameState(GameState.Running);
+    }
+
+    private void Restart()
     {
         Reset();
-        StartGame();
     }
 
     public void Reset()
     {
-        UnloadLevel(_listScene[_indexScene]);
         _indexScene = 0;
         LifeManager.Instance.Reset();
         GameOver.Instance.Reset();
@@ -159,14 +180,11 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
     }
 
-    public void UnloadActualLevel()
-    {
-        UpdateGameState(GameState.Pregame);
-        ResetGame();
-    }
-
     public void NextLevel()
     {
+        if (GameState.Running != CurrentGameState)
+            return;
+
         Time.timeScale = 0;
         if (_indexScene >= _listScene.Length - 1)
         {
@@ -174,6 +192,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
+            UnloadLevel(_listScene[_indexScene]);
             _indexScene++;
             LoadLevel(_listScene[_indexScene]);
         }

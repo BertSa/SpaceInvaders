@@ -71,7 +71,7 @@ public class UIManager : Singleton<UIManager>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameManager.Instance.UnloadActualLevel();
+                GameManager.Instance.BackToMenu();
             }
         }
     }

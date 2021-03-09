@@ -1,68 +1,72 @@
-using Level;
 using UnityEngine;
 
-public class Invader : MonoBehaviour
+namespace Invaders
 {
-    private const float CoolDownPeriodInSeconds = 1;
-    private float _timeStamp;
-    [SerializeField] public GameObject bullet;
-    public InvadersManager invadersManager;
-    public InvaderTypes type;
-    public Sprite[] walkStateSprites;
-    private int _currentSpriteIndex;
-    private SpriteRenderer _spriteRender;
-
-
-    public void Start()
+    public class Invader : MonoBehaviour
     {
-        _spriteRender = GetComponent<SpriteRenderer>();
-        Invoke(nameof(PlayAnimation), 0.5f);
-    }
+        private const float CoolDownPeriodInSeconds = 1;
+        private float _timeStamp;
+        [SerializeField] public GameObject bullet;
+        public InvadersManager invadersManager;
+        public InvaderTypes type;
+        public Sprite[] walkStateSprites;
+        private int _currentSpriteIndex;
+        private SpriteRenderer _spriteRender;
 
-    public void Fire()
-    {
-        var position = transform.position;
-        var x = position.x;
-        var y = position.y - 1;
 
-        if (_timeStamp <= Time.time)
+        public void Start()
         {
-            _timeStamp = Time.time + CoolDownPeriodInSeconds;
-            Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
+            _spriteRender = GetComponent<SpriteRenderer>();
+            Invoke(nameof(PlayAnimation), 0.5f);
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (!other.gameObject.CompareTag($"Wall")) return;
-        invadersManager.OnChildrenCollisionEnter();
-    }
+        public void Fire()
+        {
+            var position = transform.position;
+            var x = position.x;
+            var y = position.y - 1;
 
-    private void OnDestroy()
-    {
-        if (!LevelControler.IsInitialized) return;
-            LevelControler.Instance.OnEnemyKill(type);
-    }
+            if (_timeStamp <= Time.time)
+            {
+                _timeStamp = Time.time + CoolDownPeriodInSeconds;
+                Instantiate(bullet, new Vector3(x, y, 5), Quaternion.identity);
+            }
+        }
 
-    public void PlayAnimation()
-    {
-        ChangeWalkState();
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (!other.gameObject.CompareTag($"Wall")) return;
+            invadersManager.OnChildrenCollisionEnter();
+        }
 
-        Invoke(nameof(PlayAnimation), 0.5f);
-    }
+        private void OnDestroy()
+        {
+            if (!ScoreManager.IsInitialized&&GameManager.Instance.CurrentGameState!=GameManager.GameState.Running) return;
+            ScoreManager.Instance.AddPointsPerTypes(type);
+            invadersManager.MinusOneEnemy();
+            
+        }
 
-    private void ChangeWalkState()
-    {
-        _currentSpriteIndex++;
-        if (_currentSpriteIndex >= walkStateSprites.Length) _currentSpriteIndex = 0;
+        public void PlayAnimation()
+        {
+            ChangeWalkState();
 
-        _spriteRender.sprite = (walkStateSprites[_currentSpriteIndex]);
-    }
+            Invoke(nameof(PlayAnimation), 0.5f);
+        }
 
-    public enum InvaderTypes
-    {
-        Octopus,
-        Crab,
-        Squid
+        private void ChangeWalkState()
+        {
+            _currentSpriteIndex++;
+            if (_currentSpriteIndex >= walkStateSprites.Length) _currentSpriteIndex = 0;
+
+            _spriteRender.sprite = (walkStateSprites[_currentSpriteIndex]);
+        }
+
+        public enum InvaderTypes
+        {
+            Octopus,
+            Crab,
+            Squid
+        }
     }
 }

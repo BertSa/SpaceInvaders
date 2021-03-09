@@ -1,4 +1,5 @@
 ﻿using System;
+using Level;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     private float _timeStamp;
     private const float Speed = 6;
     private const float CoolDownPeriodInSeconds = 0.5f;
+    public LevelManager LevelManager { get; set; }
 
     public void Start()
     {
@@ -32,6 +34,7 @@ public class PlayerScript : MonoBehaviour
         if (LifeManager.IsInitialized)
         {
             LifeManager.Instance.OnPlayerKilled();
+            LevelManager.SpawnNewPlayer();
         }
     }
 }

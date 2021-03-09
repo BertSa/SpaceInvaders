@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Level;
-using UnityEngine;
-
-public class LifeManager : Singleton<LifeManager>
+﻿public class LifeManager : Singleton<LifeManager>
 {
     private static readonly int DefaultAmountOfLives = 3;
     private int _lives;
@@ -19,11 +14,6 @@ public class LifeManager : Singleton<LifeManager>
         if (_lives == 0)
         {
             GameOver.Instance.SetOver(GameOver.WlState.Lost);
-        }
-
-        if (LevelControler.IsInitialized)
-        {
-            LevelControler.Instance.SpawnNewPlayer();
         }
     }
 

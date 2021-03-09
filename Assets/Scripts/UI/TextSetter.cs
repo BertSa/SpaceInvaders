@@ -19,10 +19,10 @@ public class TextSetter : MonoBehaviour
             if (GameOver.IsInitialized)
                 wlTitle.text = GameOver.Instance.GetState() == GameOver.WlState.Win ? "You Win!!!!" : "You Lost...";
             if (!ScoreManager.IsInitialized) return;
-            scoreValue.text = ScoreManager.Instance.PlayerPoints.ToString();
-            squidKilled.text = ScoreManager.Instance.SquidsKilled.ToString();
-            crabKilled.text = ScoreManager.Instance.CrabsKilled.ToString();
-            octopusKilled.text = ScoreManager.Instance.OctopusKilled.ToString();
+            scoreValue.text = ScoreManager.Instance.GetPlayerPoints().ToString();
+            squidKilled.text = ScoreManager.Instance.GetSquidKilled().ToString();
+            crabKilled.text = ScoreManager.Instance.GetCrabKilled().ToString();
+            octopusKilled.text = ScoreManager.Instance.GetOctopusKilled().ToString();
         }
         catch (NullReferenceException e)
         {

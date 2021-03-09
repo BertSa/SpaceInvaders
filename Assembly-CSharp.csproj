@@ -63,11 +63,11 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\Invaders\BulletInvader.cs" />
+     <Compile Include="Assets\Scripts\Invaders\EnemyCount.cs" />
      <Compile Include="Assets\Scripts\Invaders\Invader.cs" />
      <Compile Include="Assets\Scripts\Invaders\InvadersManager.cs" />
      <Compile Include="Assets\Scripts\Level\BottomLine.cs" />
-     <Compile Include="Assets\Scripts\Level\EnemyCount.cs" />
-     <Compile Include="Assets\Scripts\Level\LevelControler.cs" />
+     <Compile Include="Assets\Scripts\Level\LevelManager.cs" />
      <Compile Include="Assets\Scripts\LifeManager.cs" />
      <Compile Include="Assets\Scripts\Player\BulletPlayer.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerScript.cs" />

@@ -1,9 +1,12 @@
-﻿public class ScoreManager : Singleton<ScoreManager>
+﻿using Invaders;
+using UnityEngine;
+
+public class ScoreManager : Singleton<ScoreManager>
 {
-    public int PlayerPoints { get; private set; }
-    public int SquidsKilled { get; private set; }
-    public int CrabsKilled { get; private set; }
-    public int OctopusKilled { get; private set; }
+    private int _playerPoints;
+    private int _squidsKilled;
+    private int _crabsKilled;
+    private int _octopusKilled;
 
     public ScoreManager()
     {
@@ -16,25 +19,46 @@
         switch (type)
         {
             case Invader.InvaderTypes.Squid:
-                PlayerPoints += 10;
-                SquidsKilled++;
+                _playerPoints += 10;
+                _squidsKilled++;
                 break;
             case Invader.InvaderTypes.Crab:
-                PlayerPoints += 20;
-                CrabsKilled++;
+                _playerPoints += 20;
+                _crabsKilled++;
                 break;
             case Invader.InvaderTypes.Octopus:
-                PlayerPoints += 30;
-                OctopusKilled++;
+                _playerPoints += 30;
+                _octopusKilled++;
                 break;
         }
+        print(_playerPoints);
     }
 
     public void Reset()
     {
-        PlayerPoints = 0;
-        SquidsKilled = 0;
-        CrabsKilled = 0;
-        OctopusKilled = 0;
+        _playerPoints = 0;
+        _squidsKilled = 0;
+        _crabsKilled = 0;
+        _octopusKilled = 0;
+    }
+
+    public int GetPlayerPoints()
+    {
+        return _playerPoints;
+    }
+
+    public int GetSquidKilled()
+    {
+        return _squidsKilled;
+    }
+
+    public int GetCrabKilled()
+    {
+        return _crabsKilled;
+    }
+
+    public int GetOctopusKilled()
+    {
+        return _octopusKilled;
     }
 }
