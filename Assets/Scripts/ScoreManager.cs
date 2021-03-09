@@ -1,5 +1,7 @@
-﻿using DesignPatterns;
+﻿using System;
+using DesignPatterns;
 using Invaders;
+using UnityEngine.Events;
 using static Invaders.Invader.InvaderTypes;
 
 public class ScoreManager : Singleton<ScoreManager>
@@ -10,6 +12,12 @@ public class ScoreManager : Singleton<ScoreManager>
     public int SquidsKilled { get; private set; }
     public int CrabsKilled { get; private set; }
     public int OctopusKilled { get; private set; }
+
+    #endregion
+
+    #region PublicFields
+
+    public EventValuesForHud eventValuesForHud;
 
     #endregion
 
@@ -38,6 +46,8 @@ public class ScoreManager : Singleton<ScoreManager>
                 OctopusKilled++;
                 break;
         }
+
+        eventValuesForHud.Invoke(PlayerPoints);
     }
 
     public void Reset()
@@ -46,6 +56,7 @@ public class ScoreManager : Singleton<ScoreManager>
         SquidsKilled = 0;
         CrabsKilled = 0;
         OctopusKilled = 0;
+        eventValuesForHud?.Invoke(PlayerPoints);
     }
 
     #endregion

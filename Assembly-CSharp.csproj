@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
+     <Compile Include="Assets\Scripts\UI\HUD.cs" />
      <Compile Include="Assets\Scripts\UI\TextSetter.cs" />
      <Compile Include="Assets\Scripts\UI\UIManager.cs" />
  <Reference Include="Unity.Timeline.Editor">

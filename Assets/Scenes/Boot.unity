@@ -121,6 +121,30 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &317563869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4800591578152276824, guid: e071fc5d9deb1c38793122e2660ff50b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1162632450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &324455624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3989254821352077599, guid: e071fc5d9deb1c38793122e2660ff50b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1162632450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1162632450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -323,6 +347,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 834132707474859443, guid: e071fc5d9deb1c38793122e2660ff50b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1112959873859156874, guid: e071fc5d9deb1c38793122e2660ff50b,
         type: 3}
       propertyPath: m_IsActive
@@ -338,6 +367,16 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1336632530}
+    - target: {fileID: 8952074112059435321, guid: e071fc5d9deb1c38793122e2660ff50b,
+        type: 3}
+      propertyPath: livesValue
+      value: 
+      objectReference: {fileID: 324455624}
+    - target: {fileID: 8952074112059435321, guid: e071fc5d9deb1c38793122e2660ff50b,
+        type: 3}
+      propertyPath: scoreValue
+      value: 
+      objectReference: {fileID: 317563869}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e071fc5d9deb1c38793122e2660ff50b, type: 3}
 --- !u!1 &1336632530 stripped
@@ -407,6 +446,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e34317272a497569f0311fc0811287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventValuesForHud:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1801389880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,3 +473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a83aa932c92615b5cf766b01d8377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventValuesForHud:
+    m_PersistentCalls:
+      m_Calls: []
