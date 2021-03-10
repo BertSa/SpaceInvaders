@@ -132,26 +132,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager 1
       objectReference: {fileID: 0}
-    - target: {fileID: 111958717725990638, guid: e1066ff6b66a09d08b5b3f1eb0c80579,
-        type: 3}
-      propertyPath: m_Animation
-      value: 
-      objectReference: {fileID: 7400000, guid: af5d964feb87dcd49a040f93b5e3a220, type: 2}
-    - target: {fileID: 111958717725990638, guid: e1066ff6b66a09d08b5b3f1eb0c80579,
-        type: 3}
-      propertyPath: m_Animations.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 111958717725990638, guid: e1066ff6b66a09d08b5b3f1eb0c80579,
-        type: 3}
-      propertyPath: m_Animations.Array.data[0]
-      value: 
-      objectReference: {fileID: 7400000, guid: cd3a7154a27cac349b264a32093d18f0, type: 2}
-    - target: {fileID: 111958717725990638, guid: e1066ff6b66a09d08b5b3f1eb0c80579,
-        type: 3}
-      propertyPath: m_Animations.Array.data[1]
-      value: 
-      objectReference: {fileID: 7400000, guid: af5d964feb87dcd49a040f93b5e3a220, type: 2}
     - target: {fileID: 224412317095143888, guid: e1066ff6b66a09d08b5b3f1eb0c80579,
         type: 3}
       propertyPath: m_Pivot.x

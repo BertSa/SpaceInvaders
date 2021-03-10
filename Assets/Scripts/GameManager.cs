@@ -21,7 +21,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     public EventGameState onGameStateChanged;
-    // public GameObject[] systemPrefabs;
 
     private readonly List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
 
@@ -40,7 +39,6 @@ public class GameManager : Singleton<GameManager>
     public void Start()
     {
         DontDestroyOnLoad(this);
-        // InstantiateSystemPrefab();
     }
 
     protected override void OnDestroy()
@@ -51,15 +49,6 @@ public class GameManager : Singleton<GameManager>
 
         _instanceSystemPrefabs.Clear();
     }
-
-    // private void InstantiateSystemPrefab()
-    // {
-    //     for (var i = 0; i < systemPrefabs.Length; i++)
-    //     {
-    //         var prefabInstance = Instantiate(systemPrefabs[i]);
-    //         _instanceSystemPrefabs.Add(prefabInstance);
-    //     }
-    // }
 
     private void LoadLevel(string levelName)
     {
@@ -167,7 +156,6 @@ public class GameManager : Singleton<GameManager>
     {
         _indexScene = 0;
         LifeManager.Instance.Reset();
-        GameOver.Instance.Reset();
         ScoreManager.Instance.Reset();
         Time.timeScale = 1;
     }

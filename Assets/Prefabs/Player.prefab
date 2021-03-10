@@ -144,4 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6941788957011153902, guid: eebf0436ed3416de28e45760d0cf02ed, type: 3}
+  clip: {fileID: 8300000, guid: b2ade37c899491841a8cde29c894b1d2, type: 3}
   levelManager: {fileID: 0}

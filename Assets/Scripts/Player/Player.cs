@@ -8,6 +8,7 @@ namespace Player
         #region SerializedFields
 
         [SerializeField] private GameObject bullet;
+        [SerializeField] private AudioClip clip;
 
         #endregion
 
@@ -36,6 +37,10 @@ namespace Player
                 LifeManager.Instance.OnPlayerKilled();
                 levelManager.SpawnNewPlayer();
             }
+            var source = GameManager.Instance.gameObject.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.Play();
+            Destroy(source, 1);
             Destroy(gameObject);
         }
 
