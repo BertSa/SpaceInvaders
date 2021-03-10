@@ -13,11 +13,21 @@ namespace Invaders
 
         #endregion
 
+        #region SerializedFields
+
+        [SerializeField] private AudioClip clip;
+
+        #endregion
+
         #region PrivateMethodes
 
         private void Start()
         {
             _bullet = GetComponent<Rigidbody2D>();
+            var source = GameManager.Instance.gameObject.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.Play();
+            Destroy(source, 1);
         }
 
         private void Update()

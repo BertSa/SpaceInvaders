@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using System;
+using Player;
 using UnityEngine;
 
 namespace Level
@@ -23,6 +24,10 @@ namespace Level
         private void Start()
         {
             Time.timeScale = 1;
+        }
+
+        private void Awake()
+        {
             SpawnNewPlayer();
         }
 

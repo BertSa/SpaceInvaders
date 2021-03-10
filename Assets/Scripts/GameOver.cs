@@ -1,4 +1,8 @@
-﻿using DesignPatterns;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using DefaultNamespace;
+using DesignPatterns;
+using UnityEngine;
 
 public class GameOver : Singleton<GameOver>
 {
@@ -9,6 +13,7 @@ public class GameOver : Singleton<GameOver>
     {
         _state = state;
         _gameOver = true;
+        SaveFile();
         GameManager.Instance.GameIsOver();
     }
 
@@ -20,6 +25,19 @@ public class GameOver : Singleton<GameOver>
     public void Reset()
     {
         _gameOver = false;
+    }
+
+    private void SaveFile()
+    {
+        var destination = Application.persistentDataPath + "/save.dat";
+        FileStream file;
+
+        file = File.Exists(destination) ? File.OpenWrite(destination) : File.Create(destination);
+
+        var data = new GameData(ScoreManager.Instance.PlayerPoints, "Sam");
+        var bf = new BinaryFormatter();
+        bf.Serialize(file, data);
+        file.Close();
     }
 
     #region Enums

@@ -79,10 +79,40 @@ namespace Invaders
         {
             ChangeWalkState();
 
-            Invoke(nameof(PlayAnimation), 0.5f);
+            var levelOfAnger = invadersManager.GetComponent<InvadersCount>().GetLevelOfAnger();
+            float val;
+            switch (levelOfAnger)
+            {
+                case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
+                {
+                    val = 0.1f;
+                    break;
+                }
+                case InvadersCount.LevelOfAnger.Rage:
+                {
+                    val = 0.2f;
+                    break;
+                }
+                case InvadersCount.LevelOfAnger.Mehh:
+                {
+                    val = 0.3f;
+                    break;
+                }
+                case InvadersCount.LevelOfAnger.Normal:
+                {
+                    val = 0.4f;
+                    break;
+                }
+                default:
+                {
+                    val = 0.5f;
+                    break;
+                }
+            }
+
+            Invoke(nameof(PlayAnimation), val);
         }
 
-//TODO speed of WalkAnimation
         private void ChangeWalkState()
         {
             _currentSpriteIndex++;

@@ -11,6 +11,7 @@ namespace Player
 
         #endregion
 
+
         #region PublicFields
 
         public LevelManager levelManager;
@@ -21,7 +22,7 @@ namespace Player
 
         private float _timeStamp;
         private const float Speed = 6;
-        private const float CoolDownPeriodInSeconds = 0.2f;
+        private const float CoolDownPeriodInSeconds = 0.5f;
 
         #endregion
 
@@ -35,13 +36,13 @@ namespace Player
                 LifeManager.Instance.OnPlayerKilled();
                 levelManager.SpawnNewPlayer();
             }
-
             Destroy(gameObject);
         }
 
         #endregion
 
         #region PrivateMethods
+        
 
         private void Update()
         {

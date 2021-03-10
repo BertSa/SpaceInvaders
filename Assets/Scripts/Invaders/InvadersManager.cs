@@ -13,7 +13,7 @@ namespace Invaders
         private bool _movingX;
         private float _min = 0;
         private float _max = 5;
-        private float _speed = 5;
+        private float _speed = 1;
         private float _previousY;
         private InvadersCount _invadersCount;
         private GameObject[] _col;
@@ -77,16 +77,16 @@ namespace Invaders
             switch (levelOfAnger)
             {
                 case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
-                    _speed = 10;
+                    _speed = 7;
                     break;
                 case InvadersCount.LevelOfAnger.Rage:
-                    _speed = 5;
-                    break;
-                case InvadersCount.LevelOfAnger.Mehh:
                     _speed = 4;
                     break;
-                case InvadersCount.LevelOfAnger.Normal:
+                case InvadersCount.LevelOfAnger.Mehh:
                     _speed = 3;
+                    break;
+                case InvadersCount.LevelOfAnger.Normal:
+                    _speed = 2;
                     break;
                 default:
                     _speed = 1;
@@ -100,7 +100,7 @@ namespace Invaders
             }
             else
             {
-                if (Math.Abs(transform.position.y - _previousY - (-1)) < 0.1 && !_movingX)
+                if (Math.Abs(transform.position.y - _previousY - (-0.5)) < 0.1 && !_movingX)
                 {
                     _direction *= -1;
                     _movingX = true;

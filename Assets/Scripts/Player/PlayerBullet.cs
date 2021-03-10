@@ -5,6 +5,12 @@ namespace Player
 {
     public class PlayerBullet : MonoBehaviour
     {
+        #region SerializedFields
+
+        [SerializeField] private AudioClip clip;
+
+        #endregion
+
         #region PrivateFields
 
         private readonly float _speed;
@@ -24,6 +30,10 @@ namespace Player
         public void Start()
         {
             _bullet = GetComponent<Rigidbody2D>();
+            var addComponent = GameManager.Instance.gameObject.AddComponent<AudioSource>();
+            addComponent.clip = clip;
+            addComponent.Play();
+            Destroy(addComponent, 1);
         }
 
         private void Update()

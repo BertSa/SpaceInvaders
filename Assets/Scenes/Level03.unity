@@ -243,5 +243,16 @@ PrefabInstance:
       propertyPath: nbOfColumn
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3583505984654919459, guid: d33a271288a7a1e4e95364f0f2fdf29b,
+        type: 3}
+      propertyPath: invaders.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583505984654919459, guid: d33a271288a7a1e4e95364f0f2fdf29b,
+        type: 3}
+      propertyPath: invaders.Array.data[5]
+      value: 
+      objectReference: {fileID: 3484740235488784526, guid: 29bd9070ddc021e7f80268990a07bbd9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33a271288a7a1e4e95364f0f2fdf29b, type: 3}

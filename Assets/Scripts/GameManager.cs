@@ -27,7 +27,13 @@ public class GameManager : Singleton<GameManager>
 
     private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
     private int _indexScene;
-    private readonly string[] _listScene = {"Level01", "Level02"};
+
+    private readonly string[] _listScene =
+    {
+        "Level01",
+        "Level02",
+        "Level03",
+    };
 
     public GameState CurrentGameState { get; private set; } = GameState.Pregame;
 
@@ -141,7 +147,6 @@ public class GameManager : Singleton<GameManager>
         Reset();
     }
 
-//TODO make a better reset
     public void ResetGame()
     {
         var unloadSceneAsync = SceneManager.UnloadSceneAsync(_listScene[_indexScene]);
@@ -164,6 +169,7 @@ public class GameManager : Singleton<GameManager>
         LifeManager.Instance.Reset();
         GameOver.Instance.Reset();
         ScoreManager.Instance.Reset();
+        Time.timeScale = 1;
     }
 
     public void GameIsOver()

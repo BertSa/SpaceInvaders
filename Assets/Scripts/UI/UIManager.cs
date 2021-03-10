@@ -11,6 +11,7 @@ namespace UI
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject gameOver;
+        [SerializeField] private GameObject hud;
         [SerializeField] private GameObject dummyCamera;
         [SerializeField] private GameObject levelCamera;
 
@@ -22,7 +23,6 @@ namespace UI
             GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
         }
 
-        //TODO game ui
         private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
         {
             if (previousState == Pregame && currentState == Running ||
@@ -33,6 +33,7 @@ namespace UI
                 pauseMenu.gameObject.SetActive(false);
                 gameOver.gameObject.SetActive(false);
                 levelCamera.gameObject.SetActive(true);
+                hud.gameObject.SetActive(true);
             }
 
             if (previousState == Running && currentState == Pause)
@@ -51,6 +52,8 @@ namespace UI
                 mainMenu.gameObject.SetActive(true);
                 dummyCamera.gameObject.SetActive(true);
                 levelCamera.gameObject.SetActive(false);
+                hud.gameObject.SetActive(false);
+
             }
         }
 
