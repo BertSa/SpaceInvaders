@@ -1,15 +1,14 @@
-namespace DefaultNamespace
-{
-    [System.Serializable]
-    public class GameData
-    {
-        public int score;
-        public string name;
+using System;
 
-        public GameData(int scoreInt, string nameStr)
-        {
-            score = scoreInt;
-            name = nameStr;
-        }
+[Serializable]
+public class GameData
+{
+    public int Score { get; }
+    public string Name { get; }
+
+    public GameData(int scoreInt, string nameStr)
+    {
+        Score = scoreInt;
+        Name = nameStr;
     }
 }

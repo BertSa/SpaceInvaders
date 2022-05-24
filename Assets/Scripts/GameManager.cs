@@ -6,26 +6,17 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 [Serializable]
-public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState>
+public class EventGameState : UnityEvent<GameState, GameState>
 {
 }
 
 public class GameManager : Singleton<GameManager>
 {
-    public enum GameState
-    {
-        Pregame,
-        Running,
-        Pause,
-        Ending
-    }
-
     public EventGameState onGameStateChanged;
 
-    private readonly List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
-
-    private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
-    private int _indexScene;
+    private readonly List<GameObject> _instanceSystemPrefabs = new();
+    private readonly List<AsyncOperation> _loadOperations = new();
+    private int IndexScene { get; set; }
 
     private readonly string[] _listScene =
     {
@@ -44,8 +35,16 @@ public class GameManager : Singleton<GameManager>
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (_instanceSystemPrefabs == null) return;
-        foreach (var prefabInstance in _instanceSystemPrefabs) Destroy(prefabInstance);
+
+        if (_instanceSystemPrefabs == null)
+        {
+            return;
+        }
+
+        foreach (var prefabInstance in _instanceSystemPrefabs)
+        {
+            Destroy(prefabInstance);
+        }
 
         _instanceSystemPrefabs.Clear();
     }
@@ -53,67 +52,54 @@ public class GameManager : Singleton<GameManager>
     private void LoadLevel(string levelName)
     {
         var loadSceneAsync = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-        if (ReturnIfNull(loadSceneAsync, true, levelName)) return;
+        if (loadSceneAsync == null)
+        {
+            Debug.Log($"error loading scene : {levelName}");
+            return;
+        }
 
         loadSceneAsync.completed += OnLoadSceneComplete;
         _loadOperations.Add(loadSceneAsync);
     }
 
-    private static bool ReturnIfNull(AsyncOperation loadSceneAsync, bool load, string levelName)
-    {
-        if (loadSceneAsync != null) return false;
-        print((load) ? "error loading scene : " : "error unloading scene : " + levelName);
-        return true;
-    }
-
-    private void UnloadLevel(string levelName)
+    private void UnloadLevel(string levelName, Action<AsyncOperation> onUnloadComplete)
     {
         var unloadSceneAsync = SceneManager.UnloadSceneAsync(levelName);
-        if (ReturnIfNull(unloadSceneAsync, false, levelName)) return;
+        if (unloadSceneAsync == null)
+        {
+            Debug.Log($"error unloading scene : {levelName}");
+            return;
+        }
 
-        unloadSceneAsync.completed += OnUnloadSceneComplete;
+        unloadSceneAsync.completed += onUnloadComplete;
     }
 
 
     private void OnLoadSceneComplete(AsyncOperation ao)
     {
-        if (_loadOperations.Contains(ao))
+        if (!_loadOperations.Contains(ao))
         {
-            _loadOperations.Remove(ao);
-            // Ici on peut aviser les composantes qui ont besoin de savoir que le level est loadé
-            if (_loadOperations.Count == 0) UpdateGameState(GameState.Running);
+            return;
         }
 
-        print("load completed");
+        _loadOperations.Remove(ao);
+
+        if (_loadOperations.Count == 0)
+        {
+            UpdateGameState(GameState.Running);
+        }
     }
 
-    private void OnUnloadSceneComplete(AsyncOperation obj)
-    {
-        print("unload completed");
-    }
-
-    private void UpdateGameState(GameState newGameState)
+    public void UpdateGameState(GameState newGameState)
     {
         var previousGameState = CurrentGameState;
         CurrentGameState = newGameState;
-        switch (CurrentGameState)
-        {
-            case GameState.Pregame:
-                break;
-            case GameState.Running:
-                break;
-            case GameState.Pause:
-                break;
-            case GameState.Ending:
-                break;
-        }
-
         onGameStateChanged.Invoke(CurrentGameState, previousGameState);
     }
 
     public void StartGame()
     {
-        LoadLevel(_listScene[_indexScene]);
+        LoadLevel(_listScene[IndexScene]);
     }
 
     public void PauseGame()
@@ -128,66 +114,58 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
     public void BackToMenu()
     {
         UpdateGameState(GameState.Pregame);
-        UnloadLevel(_listScene[_indexScene]);
+        UnloadLevel(_listScene[IndexScene], _ => Debug.Log("unload completed"));
         Reset();
     }
 
     public void ResetGame()
     {
-        var unloadSceneAsync = SceneManager.UnloadSceneAsync(_listScene[_indexScene]);
-        if (ReturnIfNull(unloadSceneAsync, false, _listScene[_indexScene])) return;
-
-        unloadSceneAsync.completed += OnUnloadSceneCompleteForRestart;
+        UnloadLevel(_listScene[IndexScene], _ =>
+        {
+            Reset();
+            StartGame();
+            UpdateGameState(GameState.Running);
+        });
     }
-
-    private void OnUnloadSceneCompleteForRestart(AsyncOperation obj)
-    {
-        Reset();
-        StartGame();
-        UpdateGameState(GameState.Running);
-    }
-
 
     public void Reset()
     {
-        _indexScene = 0;
+        IndexScene = 0;
         LifeManager.Instance.Reset();
         ScoreManager.Instance.Reset();
         Time.timeScale = 1;
     }
 
-    public void GameIsOver()
-    {
-        UpdateGameState(GameState.Ending);
-        Time.timeScale = 0;
-    }
-
     public void NextLevel()
     {
         if (GameState.Running != CurrentGameState)
+        {
             return;
+        }
 
-        if (_indexScene >= _listScene.Length - 1)
+        if (IndexScene >= _listScene.Length - 1)
         {
             Time.timeScale = 0;
-            GameOver.Instance.SetOverWithWinner(GameOver.WlState.Win);
+            UpdateGameState(GameState.Won);
+            return;
         }
-        else
+
+        UnloadLevel(_listScene[IndexScene], _ =>
         {
-            var unloadSceneAsync = SceneManager.UnloadSceneAsync(_listScene[_indexScene]);
-            if (ReturnIfNull(unloadSceneAsync, false, _listScene[_indexScene])) return;
-
-            unloadSceneAsync.completed += OnUnloadSceneCompleteForNextLevel;
-        }
+            IndexScene++;
+            LoadLevel(_listScene[IndexScene]);
+        });
     }
+}
 
-    private void OnUnloadSceneCompleteForNextLevel(AsyncOperation obj)
-    {
-        _indexScene++;
-        LoadLevel(_listScene[_indexScene]);
-    }
+public enum GameState
+{
+    Pregame,
+    Running,
+    Pause,
+    Won,
+    Lost,
 }

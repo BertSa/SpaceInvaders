@@ -1,25 +1,16 @@
 ﻿using System;
 using DesignPatterns;
 using Invaders;
-using UnityEngine.Events;
-using static Invaders.Invader.InvaderTypes;
+using static Invaders.InvaderTypes;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    #region EncapsulatedFields
-
     public int PlayerPoints { get; private set; }
     public int SquidsKilled { get; private set; }
     public int CrabsKilled { get; private set; }
     public int OctopusKilled { get; private set; }
 
-    #endregion
-
-    #region PublicFields
-
     public EventValuesForHud eventValuesForHud;
-
-    #endregion
 
     public ScoreManager()
     {
@@ -27,9 +18,7 @@ public class ScoreManager : Singleton<ScoreManager>
     }
 
 
-    #region PublicMethods
-
-    public void AddPointsPerTypes(Invader.InvaderTypes type)
+    public void AddPointsPerTypes(InvaderTypes type)
     {
         switch (type)
         {
@@ -45,6 +34,8 @@ public class ScoreManager : Singleton<ScoreManager>
                 PlayerPoints += 30;
                 OctopusKilled++;
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
 
         eventValuesForHud.Invoke(PlayerPoints);
@@ -58,6 +49,4 @@ public class ScoreManager : Singleton<ScoreManager>
         OctopusKilled = 0;
         eventValuesForHud?.Invoke(PlayerPoints);
     }
-
-    #endregion
 }

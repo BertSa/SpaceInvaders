@@ -1,37 +1,30 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using DefaultNamespace;
-using DesignPatterns;
+﻿using DesignPatterns;
 using UnityEngine;
 
 public class GameOver : Singleton<GameOver>
 {
-    private WlState _state;
-
-    public void SetOverWithWinner(WlState state)
+    private void Start()
     {
-        _state = state;
+        GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
+    }
+
+    private void HandleGameStateChanged(GameState currentState, GameState previousState)
+    {
+        if (currentState is not (GameState.Lost or GameState.Won))
+        {
+            return;
+        }
+
+        if (!ScoreManager.IsInitialized)
+        {
+            Debug.Log("ScoreManager Not Initialized!");
+            return;
+        }
+
         var data = Save.LoadFile();
-        if (data.score < ScoreManager.Instance.PlayerPoints)
+        if (data.Score < ScoreManager.Instance.PlayerPoints)
         {
             Save.SaveFile(ScoreManager.Instance.PlayerPoints, "Sam");
         }
-
-        GameManager.Instance.GameIsOver();
     }
-
-    public WlState GetState()
-    {
-        return _state;
-    }
-
-    #region Enums
-
-    public enum WlState
-    {
-        Win,
-        Lost
-    }
-
-    #endregion
 }

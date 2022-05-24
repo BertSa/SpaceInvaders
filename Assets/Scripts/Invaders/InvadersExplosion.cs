@@ -9,9 +9,11 @@ namespace Invaders
 
         private void Start()
         {
-            var addComponent = GameManager.Instance.gameObject.AddComponent<AudioSource>();
+            var gameManager = GameManager.Instance.gameObject;
+            var addComponent = gameManager.AddComponent<AudioSource>();
             addComponent.clip = source;
             addComponent.Play();
+
             Destroy(addComponent, 1);
             Destroy(gameObject, 0.2f);
         }

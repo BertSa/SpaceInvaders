@@ -5,29 +5,15 @@ namespace Player
 {
     public class Player : MonoBehaviour
     {
-        #region SerializedFields
+        private const float Speed = 6;
+        private const float CoolDownPeriodInSeconds = 0.5f;
 
         [SerializeField] private GameObject bullet;
         [SerializeField] private AudioClip clip;
 
-        #endregion
-
-
-        #region PublicFields
-
         public LevelManager levelManager;
 
-        #endregion
-
-        #region PrivateFields
-
         private float _timeStamp;
-        private const float Speed = 6;
-        private const float CoolDownPeriodInSeconds = 0.5f;
-
-        #endregion
-
-        #region PublicMethods
 
         //TODO animation when player killed
         public void Kill()
@@ -37,33 +23,48 @@ namespace Player
                 LifeManager.Instance.OnPlayerKilled();
                 levelManager.SpawnNewPlayer();
             }
+
             var source = GameManager.Instance.gameObject.AddComponent<AudioSource>();
             source.clip = clip;
             source.Play();
+
             Destroy(source, 1);
             Destroy(gameObject);
         }
 
-        #endregion
-
-        #region PrivateMethods
-        
-
         private void Update()
         {
-            var horizontal = Input.GetAxis("Horizontal") * Time.deltaTime * Speed;
-            transform.position += Vector3.right * horizontal;
-            if (Input.GetKey("space") && (_timeStamp <= Time.time))
-            {
-                _timeStamp = Time.time + CoolDownPeriodInSeconds;
-                var position = transform.position;
-                var x = position.x;
-                var y = position.y + 1;
+            Move();
 
-                Instantiate(bullet, new Vector3(x, y), Quaternion.identity);
-            }
+            Fire();
         }
 
-        #endregion
+        private void Move()
+        {
+            var movement = Input.GetAxis("Horizontal") * Time.deltaTime * Speed;
+
+            transform.position += Vector3.right * movement;
+        }
+
+        private void Fire()
+        {
+            if (!Input.GetKey("space"))
+            {
+                return;
+            }
+
+            if (_timeStamp > Time.time)
+            {
+                return;
+            }
+
+            _timeStamp = Time.time + CoolDownPeriodInSeconds;
+
+            var position = transform.position;
+            var x = position.x;
+            var y = position.y + 1;
+
+            Instantiate(bullet, new Vector3(x, y), Quaternion.identity);
+        }
     }
 }

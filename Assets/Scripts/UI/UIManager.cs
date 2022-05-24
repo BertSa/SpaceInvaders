@@ -1,13 +1,11 @@
 ﻿using DesignPatterns;
 using UnityEngine;
-using static GameManager.GameState;
+using static GameState;
 
 namespace UI
 {
     public class UIManager : Singleton<UIManager>
     {
-        #region SerializedFields
-
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
         [SerializeField] private GameObject gameOver;
@@ -15,18 +13,14 @@ namespace UI
         [SerializeField] private GameObject dummyCamera;
         [SerializeField] private GameObject levelCamera;
 
-        #endregion
-
-
         private void Start()
         {
             GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
         }
 
-        private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
+        private void HandleGameStateChanged(GameState currentState, GameState previousState)
         {
-            if (previousState == Pregame && currentState == Running ||
-                previousState == Pause && currentState == Running)
+            if (previousState == Pregame && currentState == Running || previousState == Pause && currentState == Running)
             {
                 mainMenu.gameObject.SetActive(false);
                 dummyCamera.gameObject.SetActive(false);
@@ -41,19 +35,18 @@ namespace UI
                 pauseMenu.gameObject.SetActive(true);
             }
 
-            if (previousState == Running && currentState == Ending)
+            if (previousState == Running && currentState is Lost or Won)
             {
                 gameOver.gameObject.SetActive(true);
             }
 
-            if (previousState == Ending && currentState == Pregame)
+            if (previousState is Lost or Won && currentState == Pregame)
             {
                 gameOver.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(true);
                 dummyCamera.gameObject.SetActive(true);
                 levelCamera.gameObject.SetActive(false);
                 hud.gameObject.SetActive(false);
-
             }
         }
 
@@ -88,7 +81,7 @@ namespace UI
 
                     break;
                 }
-                case Ending:
+                case Lost or Won:
                 {
                     if (Input.GetKeyDown(KeyCode.Space))
                     {

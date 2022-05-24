@@ -1,37 +1,35 @@
-using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using DefaultNamespace;
 using UnityEngine;
 
-public class Save
+public static class Save
 {
-    public static void SaveFile(int score,String player)
+    public static void SaveFile(int score, string player)
     {
         var destination = Application.persistentDataPath + "/save.dat";
-        FileStream file;
 
-        file = File.Exists(destination) ? File.OpenWrite(destination) : File.Create(destination);
+        var file = File.Exists(destination) ? File.OpenWrite(destination) : File.Create(destination);
 
-        var data = new GameData(score,player);
+        var data = new GameData(score, player);
         var bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
     }
+
     public static GameData LoadFile()
     {
         var destination = Application.persistentDataPath + "/save.dat";
-        FileStream file;
 
-        if (File.Exists(destination)) file = File.OpenRead(destination);
-        else
+        if (!File.Exists(destination))
         {
             Debug.LogError("File not found");
             return null;
         }
 
-        BinaryFormatter bf = new BinaryFormatter();
-        var data = (GameData) bf.Deserialize(file);
+        var file = File.OpenRead(destination);
+
+        var bf = new BinaryFormatter();
+        var data = (GameData)bf.Deserialize(file);
         file.Close();
 
         return data;

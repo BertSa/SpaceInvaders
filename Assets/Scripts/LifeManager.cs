@@ -4,19 +4,17 @@ public class LifeManager : Singleton<LifeManager>
 {
     private const int DefaultAmountOfLives = 3;
     private int _lives;
-    
-    public EventValuesForHud eventValuesForHud;
 
-    #region PublicMethods
+    public EventValuesForHud eventValuesForHud;
 
     public void OnPlayerKilled()
     {
-        if (GameManager.Instance.CurrentGameState != GameManager.GameState.Running) return;
+        if (GameManager.Instance.CurrentGameState != GameState.Running) return;
         _lives--;
         eventValuesForHud.Invoke(_lives);
         if (_lives <= 0)
         {
-            GameOver.Instance.SetOverWithWinner(GameOver.WlState.Lost);
+            GameManager.Instance.UpdateGameState(GameState.Lost);
         }
     }
 
@@ -26,16 +24,8 @@ public class LifeManager : Singleton<LifeManager>
         eventValuesForHud.Invoke(_lives);
     }
 
-    #endregion
-
-    #region PrivateMethods
-
     private void Start()
     {
         Reset();
     }
-
-    #endregion
-
-    
 }

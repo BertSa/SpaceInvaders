@@ -25,11 +25,6 @@ public class HUD : MonoBehaviour
     {
         scoreValue.text = value.ToString();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 }
 
 [Serializable]

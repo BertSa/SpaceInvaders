@@ -6,9 +6,15 @@ namespace Level
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!GameOver.IsInitialized || !other.gameObject.CompareTag($"Invaders")) return;
+            if (!other.gameObject.CompareTag("Invaders"))
+            {
+                return;
+            }
 
-            GameOver.Instance.SetOverWithWinner(GameOver.WlState.Lost);
+            if (GameManager.IsInitialized)
+            {
+                GameManager.Instance.UpdateGameState(GameState.Lost);
+            }
         }
     }
 }

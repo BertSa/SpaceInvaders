@@ -1,58 +1,30 @@
-﻿using Player;
-using UnityEngine;
-
+﻿using UnityEngine;
+using Player;
 namespace Invaders
 {
-    public class InvadersBullet : MonoBehaviour
+    public class InvadersBullet : Bullet
     {
-        #region PrivateFields
-
-        private const float Speed = 5f;
         private const string Target = "Player";
-        private Rigidbody2D _bullet;
 
-        #endregion
-
-        #region SerializedFields
-
-        [SerializeField] private AudioClip clip;
-
-        #endregion
-
-        #region PrivateMethodes
-
-        private void Start()
+        public InvadersBullet() : base(5f, Vector2.down)
         {
-            _bullet = GetComponent<Rigidbody2D>();
-            var source = GameManager.Instance.gameObject.AddComponent<AudioSource>();
-            source.clip = clip;
-            source.Play();
-            Destroy(source, 1);
         }
 
-        private void Update()
+        protected override void OnTriggerEnter2D(Collider2D other)
         {
-            _bullet.position += Vector2.down * (Speed * Time.deltaTime);
-        }
+            base.OnTriggerEnter2D(other);
 
-        private void OnBecameInvisible()
-        {
-            Destroy(gameObject);
-        }
+            if (other.gameObject.CompareTag("Invaders"))
+            {
+                return;
+            }
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.gameObject.CompareTag($"Invaders")) return;
             if (other.gameObject.CompareTag(Target))
             {
                 var playerScript = other.GetComponent<Player.Player>();
                 playerScript.Kill();
                 Destroy(gameObject);
             }
-
-            if (other.CompareTag($"Bullet")) Destroy(gameObject);
         }
-
-        #endregion
     }
 }

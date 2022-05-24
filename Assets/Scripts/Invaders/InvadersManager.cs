@@ -7,8 +7,6 @@ namespace Invaders
 {
     public class InvadersManager : MonoBehaviour
     {
-        #region PrivateFields
-
         private int _direction;
         private bool _movingX;
         private float _min = 0;
@@ -18,33 +16,22 @@ namespace Invaders
         private InvadersCount _invadersCount;
         private GameObject[] _col;
 
-        #endregion
-
-        #region SerializedFields
-
         [SerializeField] private Transform verticalLayoutGroup;
         [SerializeField] [Range(3, 10)] private int nbOfColumn = 3;
         [SerializeField] private Invader[] invaders;
 
-        #endregion
-
-        #region PublicMethods
-
         public void OnChildrenCollisionEnter()
         {
-            if (!_movingX) return;
+            if (!_movingX)
+            {
+                return;
+            }
+
             _movingX = false;
             _previousY = transform.position.y;
         }
 
-        public void MinusOneEnemy()
-        {
-            _invadersCount.MinusOneEnemy();
-        }
-
-        #endregion
-
-        #region PrivateMethods
+        public void MinusOneEnemy() => _invadersCount.MinusOneEnemy();
 
         private void Start()
         {
@@ -74,87 +61,59 @@ namespace Invaders
         private void Update()
         {
             var levelOfAnger = _invadersCount.GetLevelOfAnger();
-            switch (levelOfAnger)
+            _speed = levelOfAnger switch
             {
-                case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
-                    _speed = 7;
-                    break;
-                case InvadersCount.LevelOfAnger.Rage:
-                    _speed = 4;
-                    break;
-                case InvadersCount.LevelOfAnger.Mehh:
-                    _speed = 3;
-                    break;
-                case InvadersCount.LevelOfAnger.Normal:
-                    _speed = 2;
-                    break;
-                default:
-                    _speed = 1;
-                    break;
-            }
+                LevelOfAnger.NotReallyGoodForYou => 7,
+                LevelOfAnger.Rage => 4,
+                LevelOfAnger.Mehh => 3,
+                LevelOfAnger.Normal => 2,
+                _ => 1,
+            };
 
             var t = transform;
             if (_movingX)
             {
                 t.position += Vector3.right * (_direction * Time.deltaTime * _speed);
             }
+            else if (Math.Abs(transform.position.y - _previousY - (-0.5)) < 0.1)
+            {
+                _direction *= -1;
+                _movingX = true;
+            }
             else
             {
-                if (Math.Abs(transform.position.y - _previousY - (-0.5)) < 0.1 && !_movingX)
-                {
-                    _direction *= -1;
-                    _movingX = true;
-                }
-                else
-                {
-                    t.position += Vector3.down * (Time.deltaTime * _speed);
-                }
+                t.position += Vector3.down * (Time.deltaTime * _speed);
             }
         }
 
-        //TODO Make it better
         private void SelectForFire()
         {
             var levelOfAnger = _invadersCount.GetLevelOfAnger();
-            switch (levelOfAnger)
+            _max = levelOfAnger switch
             {
-                case InvadersCount.LevelOfAnger.NotReallyGoodForYou:
-                {
-                    _max = 1;
-                    break;
-                }
-                case InvadersCount.LevelOfAnger.Rage:
-                {
-                    _max = 2;
-                    break;
-                }
-                case InvadersCount.LevelOfAnger.Mehh:
-                {
-                    _max = 3;
-                    break;
-                }
-                case InvadersCount.LevelOfAnger.Normal:
-                {
-                    _max = 4;
-                    break;
-                }
-                default:
-                {
-                    _max = 5;
-                    break;
-                }
+                LevelOfAnger.NotReallyGoodForYou => 1,
+                LevelOfAnger.Rage => 2,
+                LevelOfAnger.Mehh => 3,
+                LevelOfAnger.Normal => 4,
+                _ => 5,
+            };
+
+            if (transform.childCount <= 0)
+            {
+                return;
             }
 
-            var rand = Random.Range(_min, _max);
-            if (transform.childCount <= 0) return;
             var randomCol = (int) Math.Floor(Random.Range(_min, transform.childCount - 1));
+
             var column = transform.GetChild(randomCol);
             if (column.childCount > 0)
             {
-                column.GetChild(column.childCount - 1).gameObject.GetComponent<Invader>()
-                    .Invoke(nameof(Invader.Fire), 0f);
+                var child = column.GetChild(column.childCount - 1);
+                var invader = child.gameObject.GetComponent<Invader>();
+                invader.Invoke(nameof(Invader.Fire), 0f);
             }
 
+            var rand = Random.Range(_min, _max);
             Invoke(nameof(SelectForFire), rand);
         }
 
@@ -166,7 +125,5 @@ namespace Invaders
                 layoutGroup.enabled = false;
             }
         }
-
-        #endregion
     }
 }
