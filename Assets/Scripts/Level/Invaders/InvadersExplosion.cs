@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Invaders
+namespace Level.Invaders
 {
     public class InvadersExplosion : MonoBehaviour
     {

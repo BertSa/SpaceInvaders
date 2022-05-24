@@ -1,7 +1,7 @@
 using Enums;
 using UnityEngine;
 
-namespace Invaders
+namespace Level.Invaders
 {
     public class Invader : MonoBehaviour, IKillable
     {

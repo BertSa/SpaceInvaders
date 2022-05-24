@@ -1,5 +1,5 @@
 using Enums;
-using Level;
+using Level.Invaders;
 
 public class WaveManager
 {

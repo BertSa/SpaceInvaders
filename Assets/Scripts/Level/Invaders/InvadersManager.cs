@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Invaders
+namespace Level.Invaders
 {
     public class InvadersManager : Singleton<InvadersManager>
     {

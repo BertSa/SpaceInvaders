@@ -1,7 +1,7 @@
-﻿using Player;
+﻿using Level.Player;
 using UnityEngine;
 
-namespace Invaders
+namespace Level.Invaders
 {
     public class InvadersBullet : Bullet
     {

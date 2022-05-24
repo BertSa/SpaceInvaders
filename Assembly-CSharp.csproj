@@ -42,26 +42,15 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets/Scripts/DesignPatterns/Singleton.cs" />
-     <Compile Include="Assets/Scripts/Save.cs" />
-     <Compile Include="Assets/Scripts/Invaders/Invader.cs" />
-     <Compile Include="Assets/Scripts/Player/PlayerController.cs" />
-     <Compile Include="Assets/Scripts/GameOver.cs" />
      <Compile Include="Assets/Scripts/ScoreManager.cs" />
-     <Compile Include="Assets/Scripts/GameData.cs" />
      <Compile Include="Assets/Scripts/UI/UIManager.cs" />
      <Compile Include="Assets/Scripts/Enums/LevelOfAnger.cs" />
-     <Compile Include="Assets/Scripts/Invaders/InvadersManager.cs" />
      <Compile Include="Assets/Scripts/UI/TextSetter.cs" />
-     <Compile Include="Assets/Scripts/Player/PlayerBullet.cs" />
      <Compile Include="Assets/Scripts/Level/LevelManager.cs" />
-     <Compile Include="Assets/Scripts/Invaders/InvadersExplosion.cs" />
      <Compile Include="Assets/Scripts/GameManager.cs" />
-     <Compile Include="Assets/Scripts/Invaders/InvadersBullet.cs" />
      <Compile Include="Assets/Scripts/Level/BottomLine.cs" />
      <Compile Include="Assets/Scripts/LifeManager.cs" />
      <Compile Include="Assets/Scripts/UI/HUD.cs" />
-     <Compile Include="Assets/Scripts/Bullet.cs" />
-     <Compile Include="Assets/Scripts/Level/InvaderWave.cs" />
      <Compile Include="Assets/Scripts/Events/EventTriggered.cs" />
      <Compile Include="Assets/Scripts/Enums/UserInteraction.cs" />
      <Compile Include="Assets/Scripts/Events/EventGameState.cs" />
@@ -69,8 +58,19 @@
      <Compile Include="Assets/Scripts/Events/EventValuesForHud.cs" />
      <Compile Include="Assets/Scripts/Events/EventUserInteraction.cs" />
      <Compile Include="Assets/Scripts/Enums/GameState.cs" />
-     <Compile Include="Assets/Scripts/IKillable.cs" />
      <Compile Include="Assets/Scripts/WaveManager.cs" />
+     <Compile Include="Assets\Scripts\Level\Bullet.cs" />
+     <Compile Include="Assets\Scripts\Level\IKillable.cs" />
+     <Compile Include="Assets\Scripts\Level\Invaders\Invader.cs" />
+     <Compile Include="Assets\Scripts\Level\Invaders\InvadersBullet.cs" />
+     <Compile Include="Assets\Scripts\Level\Invaders\InvadersExplosion.cs" />
+     <Compile Include="Assets\Scripts\Level\Invaders\InvadersManager.cs" />
+     <Compile Include="Assets\Scripts\Level\Invaders\InvaderWave.cs" />
+     <Compile Include="Assets\Scripts\Level\Player\PlayerBullet.cs" />
+     <Compile Include="Assets\Scripts\Level\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\SaveScore\GameData.cs" />
+     <Compile Include="Assets\Scripts\SaveScore\GameOver.cs" />
+     <Compile Include="Assets\Scripts\SaveScore\Save.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/home/bertsa/Unity/Hub/Editor/2021.3.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -797,8 +797,6 @@
      <Reference Include="Unity.2D.SpriteShape.Runtime">
      <HintPath>/home/bertsa/workspace/bertsa/SpaceInvaders/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
      </Reference>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

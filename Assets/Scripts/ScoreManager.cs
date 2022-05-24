@@ -17,7 +17,6 @@ public class ScoreManager : Singleton<ScoreManager>
         Reset();
     }
 
-
     public void Reset()
     {
         SquidsKilled = 0;

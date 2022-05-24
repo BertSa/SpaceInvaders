@@ -1,6 +1,6 @@
 using Enums;
 
-namespace Level
+namespace Level.Invaders
 {
     public class InvaderWave
     {

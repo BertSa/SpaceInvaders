@@ -1,5 +1,5 @@
 ﻿using DesignPatterns;
-using Player;
+using Level.Player;
 using UnityEngine;
 
 namespace Level
@@ -10,15 +10,15 @@ namespace Level
         [SerializeField] private PlayerController playerController;
         private PlayerController _instantiatedPlayerController;
 
-        private void Start()
-        {
-            Time.timeScale = 1;
-        }
-
         protected override void Awake()
         {
             base.Awake();
             SpawnNewPlayer();
+        }
+
+        private void Start()
+        {
+            Time.timeScale = 1;
         }
 
         public void SpawnNewPlayer()

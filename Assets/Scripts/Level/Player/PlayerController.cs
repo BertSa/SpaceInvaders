@@ -1,7 +1,6 @@
-﻿using Level;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Player
+namespace Level.Player
 {
     public class PlayerController : MonoBehaviour, IKillable
     {
@@ -47,25 +46,15 @@ namespace Player
 
         private void Fire()
         {
-            if (!Input.GetKey(KeyCode.Space))
-            {
-                return;
-            }
+            if (!Input.GetKey(KeyCode.Space)) return;
 
-            if (_timeStamp > Time.time)
-            {
-                return;
-            }
+            if (_timeStamp > Time.time) return;
 
             _timeStamp = Time.time + CoolDownPeriodInSeconds;
 
             var position = transform.position;
 
-            var pos = new Vector3
-            {
-                x = position.x,
-                y = position.y + 1,
-            };
+            var pos = new Vector3 { x = position.x, y = position.y + 1, };
             Instantiate(bullet, pos, Quaternion.identity);
         }
     }
