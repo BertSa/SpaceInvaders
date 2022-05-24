@@ -10,9 +10,9 @@ namespace DesignPatterns
 
         protected virtual void Awake()
         {
-            if (Instance != null)
+            if (IsInitialized)
             {
-                print("[Singleton] trying to instantiate a second instance of singleton class");
+                Debug.Log("[Singleton] trying to instantiate a second instance of singleton class");
                 return;
             }
 
@@ -22,7 +22,9 @@ namespace DesignPatterns
         protected virtual void OnDestroy()
         {
             if (Instance == this)
+            {
                 Instance = null;
+            }
         }
     }
 }

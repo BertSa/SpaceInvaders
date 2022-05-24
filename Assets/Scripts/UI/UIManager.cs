@@ -1,12 +1,14 @@
 ﻿using DesignPatterns;
+using Enums;
+using Events;
 using UnityEngine;
-using static GameManager.GameState;
+using static Enums.GameState;
 
 namespace UI
 {
     public class UIManager : Singleton<UIManager>
     {
-        #region SerializedFields
+        public EventUserInteraction eventUserInteraction;
 
         [SerializeField] private GameObject mainMenu;
         [SerializeField] private GameObject pauseMenu;
@@ -15,88 +17,58 @@ namespace UI
         [SerializeField] private GameObject dummyCamera;
         [SerializeField] private GameObject levelCamera;
 
-        #endregion
-
-
         private void Start()
         {
-            GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
-        }
-
-        private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
-        {
-            if (previousState == Pregame && currentState == Running ||
-                previousState == Pause && currentState == Running)
-            {
-                mainMenu.gameObject.SetActive(false);
-                dummyCamera.gameObject.SetActive(false);
-                pauseMenu.gameObject.SetActive(false);
-                gameOver.gameObject.SetActive(false);
-                levelCamera.gameObject.SetActive(true);
-                hud.gameObject.SetActive(true);
-            }
-
-            if (previousState == Running && currentState == Pause)
-            {
-                pauseMenu.gameObject.SetActive(true);
-            }
-
-            if (previousState == Running && currentState == Ending)
-            {
-                gameOver.gameObject.SetActive(true);
-            }
-
-            if (previousState == Ending && currentState == Pregame)
-            {
-                gameOver.gameObject.SetActive(false);
-                mainMenu.gameObject.SetActive(true);
-                dummyCamera.gameObject.SetActive(true);
-                levelCamera.gameObject.SetActive(false);
-                hud.gameObject.SetActive(false);
-
-            }
+            GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged);
         }
 
         private void Update()
         {
+            var spaceDown = Input.GetKeyDown(KeyCode.Space);
+            var escapeDown = Input.GetKeyDown(KeyCode.Escape);
+
             switch (GameManager.Instance.CurrentGameState)
             {
-                case Pregame:
-                {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        GameManager.Instance.StartGame();
-                    }
-
+                case Pregame when spaceDown:
+                    eventUserInteraction.Invoke(UserInteraction.Start);
                     break;
-                }
-                case Running:
-                {
-                    if (Input.GetKeyDown(KeyCode.Escape))
-                    {
-                        GameManager.Instance.PauseGame();
-                    }
-
+                case Running when escapeDown:
+                    eventUserInteraction.Invoke(UserInteraction.Pause);
                     break;
-                }
-                case Pause:
-                {
-                    if (Input.GetKeyDown(KeyCode.Escape))
-                    {
-                        GameManager.Instance.ResumeGame();
-                    }
-
+                case Pause when escapeDown:
+                    eventUserInteraction.Invoke(UserInteraction.Resume);
                     break;
-                }
-                case Ending:
-                {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        GameManager.Instance.BackToMenu();
-                    }
-
+                case Lost or Won when spaceDown:
+                    eventUserInteraction.Invoke(UserInteraction.BackToMenu);
                     break;
-                }
+            }
+        }
+
+        private void HandleGameStateChanged(GameState currentState, GameState previousState)
+        {
+            switch (previousState, currentState)
+            {
+                case (Pregame or Pause, Running):
+                    mainMenu.gameObject.SetActive(false);
+                    dummyCamera.gameObject.SetActive(false);
+                    pauseMenu.gameObject.SetActive(false);
+                    gameOver.gameObject.SetActive(false);
+                    levelCamera.gameObject.SetActive(true);
+                    hud.gameObject.SetActive(true);
+                    break;
+                case (Running, Pause):
+                    pauseMenu.gameObject.SetActive(true);
+                    break;
+                case (Running, Lost or Won):
+                    gameOver.gameObject.SetActive(true);
+                    break;
+                case (Lost or Won, Pregame):
+                    gameOver.gameObject.SetActive(false);
+                    mainMenu.gameObject.SetActive(true);
+                    dummyCamera.gameObject.SetActive(true);
+                    levelCamera.gameObject.SetActive(false);
+                    hud.gameObject.SetActive(false);
+                    break;
             }
         }
     }

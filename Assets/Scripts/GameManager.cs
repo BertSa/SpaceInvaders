@@ -1,193 +1,151 @@
 ﻿using System;
 using System.Collections.Generic;
 using DesignPatterns;
+using Enums;
+using Events;
+using Level;
+using Level.Invaders;
+using UI;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-
-[Serializable]
-public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState>
-{
-}
 
 public class GameManager : Singleton<GameManager>
 {
-    public enum GameState
-    {
-        Pregame,
-        Running,
-        Pause,
-        Ending
-    }
+    private const string LevelSceneName = "LevelScene";
 
-    public EventGameState onGameStateChanged;
+    private readonly List<GameObject> _instanceSystemPrefabs = new();
+    private readonly List<AsyncOperation> _loadOperations = new();
 
-    private readonly List<GameObject> _instanceSystemPrefabs = new List<GameObject>();
-
-    private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
-    private int _indexScene;
-
-    private readonly string[] _listScene =
-    {
-        "Level01",
-        "Level02",
-        "Level03",
-    };
-
+    public EventGameState OnGameStateChanged { get; } = new();
     public GameState CurrentGameState { get; private set; } = GameState.Pregame;
 
     public void Start()
     {
         DontDestroyOnLoad(this);
+        UIManager.Instance.eventUserInteraction.AddListener(HandleInteraction);
+        LifeManager.Instance.ValuesForHud.AddListener(lives =>
+        {
+            if (lives <= decimal.Zero)
+            {
+                UpdateGameState(GameState.Lost);
+            }
+        });
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (_instanceSystemPrefabs == null) return;
-        foreach (var prefabInstance in _instanceSystemPrefabs) Destroy(prefabInstance);
+
+        if (_instanceSystemPrefabs == null)
+        {
+            return;
+        }
+
+        foreach (var prefabInstance in _instanceSystemPrefabs)
+        {
+            Destroy(prefabInstance);
+        }
 
         _instanceSystemPrefabs.Clear();
     }
 
-    private void LoadLevel(string levelName)
+    private void LoadLevel()
     {
-        var loadSceneAsync = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-        if (ReturnIfNull(loadSceneAsync, true, levelName)) return;
+        var loadSceneAsync = SceneManager.LoadSceneAsync(LevelSceneName, LoadSceneMode.Additive);
+        if (loadSceneAsync == null)
+        {
+            Debug.Log($"error loading scene : {LevelSceneName}");
+            return;
+        }
 
-        loadSceneAsync.completed += OnLoadSceneComplete;
+        loadSceneAsync.completed += operation =>
+        {
+            if (!_loadOperations.Contains(operation))
+            {
+                return;
+            }
+
+            _loadOperations.Remove(operation);
+
+            if (_loadOperations.Count != 0)
+            {
+                return;
+            }
+
+            UpdateGameState(GameState.Running);
+            InvadersManager.Instance.triggered.AddListener(NextLevel);
+            BottomLine.Instance.triggered.AddListener(() => UpdateGameState(GameState.Lost));
+        };
         _loadOperations.Add(loadSceneAsync);
     }
 
-    private static bool ReturnIfNull(AsyncOperation loadSceneAsync, bool load, string levelName)
+    private void UnloadLevel(Action<AsyncOperation> onUnloadComplete)
     {
-        if (loadSceneAsync != null) return false;
-        print((load) ? "error loading scene : " : "error unloading scene : " + levelName);
-        return true;
-    }
+        BottomLine.Instance.triggered.RemoveAllListeners();
+        InvadersManager.Instance.triggered.RemoveAllListeners();
 
-    private void UnloadLevel(string levelName)
-    {
-        var unloadSceneAsync = SceneManager.UnloadSceneAsync(levelName);
-        if (ReturnIfNull(unloadSceneAsync, false, levelName)) return;
-
-        unloadSceneAsync.completed += OnUnloadSceneComplete;
-    }
-
-
-    private void OnLoadSceneComplete(AsyncOperation ao)
-    {
-        if (_loadOperations.Contains(ao))
+        var unloadSceneAsync = SceneManager.UnloadSceneAsync(LevelSceneName);
+        if (unloadSceneAsync == null)
         {
-            _loadOperations.Remove(ao);
-            // Ici on peut aviser les composantes qui ont besoin de savoir que le level est loadé
-            if (_loadOperations.Count == 0) UpdateGameState(GameState.Running);
+            Debug.Log($"error unloading scene : {LevelSceneName}");
+            return;
         }
 
-        print("load completed");
+        unloadSceneAsync.completed += onUnloadComplete;
     }
 
-    private void OnUnloadSceneComplete(AsyncOperation obj)
+    private void HandleInteraction(UserInteraction interaction)
     {
-        print("unload completed");
+        switch (interaction)
+        {
+            case UserInteraction.Start:
+                LoadLevel();
+                break;
+            case UserInteraction.Pause:
+                UpdateGameState(GameState.Pause);
+                Time.timeScale = 0;
+                break;
+            case UserInteraction.Resume:
+                UpdateGameState(GameState.Running);
+                Time.timeScale = 1;
+                break;
+            case UserInteraction.BackToMenu:
+                UpdateGameState(GameState.Pregame);
+                UnloadLevel(_ => Debug.Log("unload completed"));
+                Reset();
+                break;
+        }
     }
 
     private void UpdateGameState(GameState newGameState)
     {
         var previousGameState = CurrentGameState;
         CurrentGameState = newGameState;
-        switch (CurrentGameState)
-        {
-            case GameState.Pregame:
-                break;
-            case GameState.Running:
-                break;
-            case GameState.Pause:
-                break;
-            case GameState.Ending:
-                break;
-        }
-
-        onGameStateChanged.Invoke(CurrentGameState, previousGameState);
+        OnGameStateChanged.Invoke(CurrentGameState, previousGameState);
     }
 
-    public void StartGame()
+    private void Reset()
     {
-        LoadLevel(_listScene[_indexScene]);
-    }
-
-    public void PauseGame()
-    {
-        UpdateGameState(GameState.Pause);
-        Time.timeScale = 0;
-    }
-
-    public void ResumeGame()
-    {
-        UpdateGameState(GameState.Running);
-        Time.timeScale = 1;
-    }
-
-    // ReSharper disable Unity.PerformanceAnalysis
-    public void BackToMenu()
-    {
-        UpdateGameState(GameState.Pregame);
-        UnloadLevel(_listScene[_indexScene]);
-        Reset();
-    }
-
-    public void ResetGame()
-    {
-        var unloadSceneAsync = SceneManager.UnloadSceneAsync(_listScene[_indexScene]);
-        if (ReturnIfNull(unloadSceneAsync, false, _listScene[_indexScene])) return;
-
-        unloadSceneAsync.completed += OnUnloadSceneCompleteForRestart;
-    }
-
-    private void OnUnloadSceneCompleteForRestart(AsyncOperation obj)
-    {
-        Reset();
-        StartGame();
-        UpdateGameState(GameState.Running);
-    }
-
-
-    public void Reset()
-    {
-        _indexScene = 0;
+        WaveManager.Instance.Reset();
         LifeManager.Instance.Reset();
         ScoreManager.Instance.Reset();
         Time.timeScale = 1;
     }
 
-    public void GameIsOver()
-    {
-        UpdateGameState(GameState.Ending);
-        Time.timeScale = 0;
-    }
-
-    public void NextLevel()
+    private void NextLevel()
     {
         if (GameState.Running != CurrentGameState)
+        {
             return;
+        }
 
-        if (_indexScene >= _listScene.Length - 1)
+        if (!WaveManager.Instance.Next())
         {
             Time.timeScale = 0;
-            GameOver.Instance.SetOverWithWinner(GameOver.WlState.Win);
+            UpdateGameState(GameState.Won);
+            return;
         }
-        else
-        {
-            var unloadSceneAsync = SceneManager.UnloadSceneAsync(_listScene[_indexScene]);
-            if (ReturnIfNull(unloadSceneAsync, false, _listScene[_indexScene])) return;
 
-            unloadSceneAsync.completed += OnUnloadSceneCompleteForNextLevel;
-        }
-    }
-
-    private void OnUnloadSceneCompleteForNextLevel(AsyncOperation obj)
-    {
-        _indexScene++;
-        LoadLevel(_listScene[_indexScene]);
+        UnloadLevel(_ => LoadLevel());
     }
 }

@@ -1,47 +1,30 @@
-﻿using System;
-using Player;
+﻿using DesignPatterns;
+using Level.Player;
 using UnityEngine;
 
 namespace Level
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : Singleton<LevelManager>
     {
-        #region SerializedFields
-
         [SerializeField] private GameObject spawn;
-        [SerializeField] private Player.Player player;
+        [SerializeField] private PlayerController playerController;
+        private PlayerController _instantiatedPlayerController;
 
-        #endregion
-
-        #region PrivateFields
-
-        private Player.Player _instantiatedPlayer;
-
-        #endregion
-
-        #region PrivateMethods
+        protected override void Awake()
+        {
+            base.Awake();
+            SpawnNewPlayer();
+        }
 
         private void Start()
         {
             Time.timeScale = 1;
         }
 
-        private void Awake()
-        {
-            SpawnNewPlayer();
-        }
-
-        #endregion
-
-        #region PublicMethods
-
-        //TODO animation when player respawn
         public void SpawnNewPlayer()
         {
-            _instantiatedPlayer = Instantiate(player, spawn.transform);
-            _instantiatedPlayer.levelManager = this;
+            _instantiatedPlayerController = Instantiate(playerController, spawn.transform);
+            _instantiatedPlayerController.levelManager = this;
         }
-
-        #endregion
     }
 }
