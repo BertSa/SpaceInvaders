@@ -1,31 +1,34 @@
 ﻿using DesignPatterns;
+using Enums;
+using Events;
+using UnityEngine;
 
 public class LifeManager : Singleton<LifeManager>
 {
     private const int DefaultAmountOfLives = 3;
     private int _lives;
 
-    public EventValuesForHud eventValuesForHud;
+    public EventValuesForHud ValuesForHud { get; } = new();
 
-    public void OnPlayerKilled()
+    private void Start()
     {
-        if (GameManager.Instance.CurrentGameState != GameState.Running) return;
-        _lives--;
-        eventValuesForHud.Invoke(_lives);
-        if (_lives <= 0)
-        {
-            GameManager.Instance.UpdateGameState(GameState.Lost);
-        }
+        Reset();
     }
 
     public void Reset()
     {
         _lives = DefaultAmountOfLives;
-        eventValuesForHud.Invoke(_lives);
+        ValuesForHud.Invoke(_lives);
     }
 
-    private void Start()
+    public void OnPlayerKilled()
     {
-        Reset();
+        if (GameManager.Instance.CurrentGameState != GameState.Running)
+        {
+            return;
+        }
+
+        _lives--;
+        ValuesForHud.Invoke(_lives);
     }
 }

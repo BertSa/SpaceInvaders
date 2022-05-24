@@ -1,56 +1,40 @@
 ﻿using System;
+using DesignPatterns;
+using Enums;
+using Events;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Invaders
 {
-    public class InvadersManager : MonoBehaviour
+    public class InvadersManager : Singleton<InvadersManager>
     {
+        public EventTriggered triggered = new();
+
         private int _direction;
         private bool _movingX;
         private float _min = 0;
         private float _max = 5;
         private float _speed = 1;
         private float _previousY;
-        private InvadersCount _invadersCount;
         private GameObject[] _col;
 
+        private int NumberOfInvadersAtStart { get; set; }
+        private int NumberOfInvadersAlive { get; set; }
+
         [SerializeField] private Transform verticalLayoutGroup;
-        [SerializeField] [Range(3, 10)] private int nbOfColumn = 3;
-        [SerializeField] private Invader[] invaders;
-
-        public void OnChildrenCollisionEnter()
-        {
-            if (!_movingX)
-            {
-                return;
-            }
-
-            _movingX = false;
-            _previousY = transform.position.y;
-        }
-
-        public void MinusOneEnemy() => _invadersCount.MinusOneEnemy();
+        [SerializeField] private Invader squid;
+        [SerializeField] private Invader crab;
+        [SerializeField] private Invader octo;
 
         private void Start()
         {
-            _invadersCount = GetComponent<InvadersCount>();
             _direction = -1;
             _previousY = transform.position.y;
             _movingX = true;
 
-            _col = new GameObject[nbOfColumn];
-            for (var j = 0; j < nbOfColumn; j++)
-            {
-                _col[j] = Instantiate(verticalLayoutGroup.gameObject, transform);
-
-                foreach (var t in invaders)
-                {
-                    var instantiate = Instantiate(t, _col[j].transform);
-                    instantiate.invadersManager = this;
-                }
-            }
+            InitWave();
 
             Invoke(nameof(RemoveLayout), 0.5f);
 
@@ -58,9 +42,36 @@ namespace Invaders
             Invoke(nameof(SelectForFire), rand);
         }
 
+        private void InitWave()
+        {
+            var wave = WaveManager.Instance.Current;
+
+            NumberOfInvadersAtStart = wave.NbOfColumn * wave.Invaders.Length;
+            NumberOfInvadersAlive = wave.NbOfColumn * wave.Invaders.Length;
+
+            _col = new GameObject[wave.NbOfColumn];
+            for (var i = 0; i < wave.NbOfColumn; i++)
+            {
+                _col[i] = Instantiate(verticalLayoutGroup.gameObject, transform);
+
+                foreach (var type in wave.Invaders)
+                {
+                    var invader = type switch
+                    {
+                        InvaderTypes.Crab => crab,
+                        InvaderTypes.Octopus => octo,
+                        InvaderTypes.Squid => squid,
+                        _ => throw new ArgumentOutOfRangeException(),
+                    };
+
+                    Instantiate(invader, _col[i].transform);
+                }
+            }
+        }
+
         private void Update()
         {
-            var levelOfAnger = _invadersCount.GetLevelOfAnger();
+            var levelOfAnger = GetLevelOfAnger();
             _speed = levelOfAnger switch
             {
                 LevelOfAnger.NotReallyGoodForYou => 7,
@@ -86,9 +97,29 @@ namespace Invaders
             }
         }
 
+        public void OnChildrenCollisionEnter()
+        {
+            if (!_movingX)
+            {
+                return;
+            }
+
+            _movingX = false;
+            _previousY = transform.position.y;
+        }
+
+        public void MinusOneEnemy()
+        {
+            NumberOfInvadersAlive--;
+            if (NumberOfInvadersAlive == 0)
+            {
+                triggered?.Invoke();
+            }
+        }
+
         private void SelectForFire()
         {
-            var levelOfAnger = _invadersCount.GetLevelOfAnger();
+            var levelOfAnger = GetLevelOfAnger();
             _max = levelOfAnger switch
             {
                 LevelOfAnger.NotReallyGoodForYou => 1,
@@ -103,7 +134,7 @@ namespace Invaders
                 return;
             }
 
-            var randomCol = (int) Math.Floor(Random.Range(_min, transform.childCount - 1));
+            var randomCol = (int)Math.Floor(Random.Range(_min, transform.childCount - 1));
 
             var column = transform.GetChild(randomCol);
             if (column.childCount > 0)
@@ -124,6 +155,22 @@ namespace Invaders
                 var layoutGroup = t.GetComponent<VerticalLayoutGroup>();
                 layoutGroup.enabled = false;
             }
+        }
+
+        public LevelOfAnger GetLevelOfAnger()
+        {
+            var instanceEnemiesAtStart = (double)NumberOfInvadersAtStart / 100;
+
+            if (NumberOfInvadersAlive < instanceEnemiesAtStart * 10)
+                return LevelOfAnger.NotReallyGoodForYou;
+            if (NumberOfInvadersAlive < instanceEnemiesAtStart * 25)
+                return LevelOfAnger.Rage;
+            if (NumberOfInvadersAlive < instanceEnemiesAtStart * 50)
+                return LevelOfAnger.Mehh;
+            if (NumberOfInvadersAlive < instanceEnemiesAtStart * 75)
+                return LevelOfAnger.Normal;
+
+            return LevelOfAnger.Fun;
         }
     }
 }

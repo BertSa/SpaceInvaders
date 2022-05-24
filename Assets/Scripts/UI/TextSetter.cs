@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +19,19 @@ namespace UI
 
         private void OnEnable()
         {
-            if (!ScoreManager.IsInitialized || !GameOver.IsInitialized) return;
+            if (!ScoreManager.IsInitialized || !GameOver.IsInitialized)
+            {
+                return;
+            }
+
             var gameData = Save.LoadFile();
+
+            if (gameData == null)
+            {
+                Debug.Log("Error: No save");
+                return;
+            }
+
             _currentName = gameData.Name;
             _currentScore = gameData.Score;
 

@@ -1,19 +1,17 @@
-﻿using UnityEngine;
+﻿using DesignPatterns;
+using Events;
+using UnityEngine;
 
 namespace Level
 {
-    public class BottomLine : MonoBehaviour
+    public class BottomLine : Singleton<BottomLine>
     {
+        public EventTriggered triggered;
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.gameObject.CompareTag("Invaders"))
+            if (other.gameObject.CompareTag("Invaders"))
             {
-                return;
-            }
-
-            if (GameManager.IsInitialized)
-            {
-                GameManager.Instance.UpdateGameState(GameState.Lost);
+                triggered.Invoke();
             }
         }
     }

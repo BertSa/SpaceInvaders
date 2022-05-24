@@ -1,33 +1,28 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Text scoreValue;
-    [SerializeField] private Text livesValue;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class HUD : MonoBehaviour
     {
-        ScoreManager.Instance.eventValuesForHud.AddListener(UpdateScoreValue);
-        LifeManager.Instance.eventValuesForHud.AddListener(UpdateLivesValue);
-    }
+        [SerializeField] private Text scoreValue;
+        [SerializeField] private Text livesValue;
 
-    private void UpdateLivesValue(int value)
-    {
-        livesValue.text = value.ToString();
-    }
 
-    private void UpdateScoreValue(int value)
-    {
-        scoreValue.text = value.ToString();
-    }
-}
+        private void Start()
+        {
+            ScoreManager.Instance.ValuesForHud.AddListener(UpdateScoreValue);
+            LifeManager.Instance.ValuesForHud.AddListener(UpdateLivesValue);
+        }
 
-[Serializable]
-public class EventValuesForHud : UnityEvent<int>
-{
+        private void UpdateLivesValue(int value)
+        {
+            livesValue.text = value.ToString();
+        }
+
+        private void UpdateScoreValue(int value)
+        {
+            scoreValue.text = value.ToString();
+        }
+    }
 }

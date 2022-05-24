@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using Player;
+﻿using Player;
+using UnityEngine;
+
 namespace Invaders
 {
     public class InvadersBullet : Bullet
@@ -21,7 +22,7 @@ namespace Invaders
 
             if (other.gameObject.CompareTag(Target))
             {
-                var playerScript = other.GetComponent<Player.Player>();
+                var playerScript = other.GetComponent<PlayerController>();
                 playerScript.Kill();
                 Destroy(gameObject);
             }

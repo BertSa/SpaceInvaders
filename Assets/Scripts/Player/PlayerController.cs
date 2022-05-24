@@ -3,17 +3,23 @@ using UnityEngine;
 
 namespace Player
 {
-    public class Player : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IKillable
     {
         private const float Speed = 6;
         private const float CoolDownPeriodInSeconds = 0.5f;
 
         [SerializeField] private GameObject bullet;
         [SerializeField] private AudioClip clip;
-
-        public LevelManager levelManager;
+        [HideInInspector] public LevelManager levelManager;
 
         private float _timeStamp;
+
+        private void Update()
+        {
+            Move();
+
+            Fire();
+        }
 
         //TODO animation when player killed
         public void Kill()
@@ -32,13 +38,6 @@ namespace Player
             Destroy(gameObject);
         }
 
-        private void Update()
-        {
-            Move();
-
-            Fire();
-        }
-
         private void Move()
         {
             var movement = Input.GetAxis("Horizontal") * Time.deltaTime * Speed;
@@ -48,7 +47,7 @@ namespace Player
 
         private void Fire()
         {
-            if (!Input.GetKey("space"))
+            if (!Input.GetKey(KeyCode.Space))
             {
                 return;
             }
@@ -61,10 +60,13 @@ namespace Player
             _timeStamp = Time.time + CoolDownPeriodInSeconds;
 
             var position = transform.position;
-            var x = position.x;
-            var y = position.y + 1;
 
-            Instantiate(bullet, new Vector3(x, y), Quaternion.identity);
+            var pos = new Vector3
+            {
+                x = position.x,
+                y = position.y + 1,
+            };
+            Instantiate(bullet, pos, Quaternion.identity);
         }
     }
 }

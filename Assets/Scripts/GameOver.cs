@@ -1,11 +1,12 @@
 ﻿using DesignPatterns;
+using Enums;
 using UnityEngine;
 
 public class GameOver : Singleton<GameOver>
 {
     private void Start()
     {
-        GameManager.Instance.onGameStateChanged.AddListener(HandleGameStateChanged);
+        GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged);
     }
 
     private void HandleGameStateChanged(GameState currentState, GameState previousState)
@@ -22,7 +23,7 @@ public class GameOver : Singleton<GameOver>
         }
 
         var data = Save.LoadFile();
-        if (data.Score < ScoreManager.Instance.PlayerPoints)
+        if (data != null && data.Score < ScoreManager.Instance.PlayerPoints)
         {
             Save.SaveFile(ScoreManager.Instance.PlayerPoints, "Sam");
         }

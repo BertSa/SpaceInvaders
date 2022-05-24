@@ -44,12 +44,12 @@
      <Compile Include="Assets/Scripts/DesignPatterns/Singleton.cs" />
      <Compile Include="Assets/Scripts/Save.cs" />
      <Compile Include="Assets/Scripts/Invaders/Invader.cs" />
-     <Compile Include="Assets/Scripts/Player/Player.cs" />
+     <Compile Include="Assets/Scripts/Player/PlayerController.cs" />
      <Compile Include="Assets/Scripts/GameOver.cs" />
      <Compile Include="Assets/Scripts/ScoreManager.cs" />
      <Compile Include="Assets/Scripts/GameData.cs" />
      <Compile Include="Assets/Scripts/UI/UIManager.cs" />
-     <Compile Include="Assets/Scripts/Invaders/InvadersCount.cs" />
+     <Compile Include="Assets/Scripts/Enums/LevelOfAnger.cs" />
      <Compile Include="Assets/Scripts/Invaders/InvadersManager.cs" />
      <Compile Include="Assets/Scripts/UI/TextSetter.cs" />
      <Compile Include="Assets/Scripts/Player/PlayerBullet.cs" />
@@ -61,6 +61,16 @@
      <Compile Include="Assets/Scripts/LifeManager.cs" />
      <Compile Include="Assets/Scripts/UI/HUD.cs" />
      <Compile Include="Assets/Scripts/Bullet.cs" />
+     <Compile Include="Assets/Scripts/Level/InvaderWave.cs" />
+     <Compile Include="Assets/Scripts/Events/EventTriggered.cs" />
+     <Compile Include="Assets/Scripts/Enums/UserInteraction.cs" />
+     <Compile Include="Assets/Scripts/Events/EventGameState.cs" />
+     <Compile Include="Assets/Scripts/Enums/InvaderTypes.cs" />
+     <Compile Include="Assets/Scripts/Events/EventValuesForHud.cs" />
+     <Compile Include="Assets/Scripts/Events/EventUserInteraction.cs" />
+     <Compile Include="Assets/Scripts/Enums/GameState.cs" />
+     <Compile Include="Assets/Scripts/IKillable.cs" />
+     <Compile Include="Assets/Scripts/WaveManager.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/home/bertsa/Unity/Hub/Editor/2021.3.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

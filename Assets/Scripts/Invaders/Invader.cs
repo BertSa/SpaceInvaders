@@ -1,8 +1,9 @@
+using Enums;
 using UnityEngine;
 
 namespace Invaders
 {
-    public class Invader : MonoBehaviour
+    public class Invader : MonoBehaviour, IKillable
     {
         private const float CoolDownPeriodInSeconds = 1;
 
@@ -12,12 +13,18 @@ namespace Invaders
         [SerializeField] private GameObject bullet;
         [SerializeField] private InvaderTypes type;
         [SerializeField] private Sprite[] walkStateSprites;
-        [SerializeField] public InvadersManager invadersManager;
+        private readonly InvadersManager invadersManager = InvadersManager.Instance;
 
         private float TimeStamp { get; set; }
         private SpriteRenderer SpriteRender { get; set; }
         private int CurrentSpriteIndex { get; set; }
 
+
+        private void Start()
+        {
+            SpriteRender = GetComponent<SpriteRenderer>();
+            Invoke(nameof(PlayAnimation), 0.5f);
+        }
 
         public void Fire()
         {
@@ -51,12 +58,6 @@ namespace Invaders
             Destroy(gameObject);
         }
 
-        private void Start()
-        {
-            SpriteRender = GetComponent<SpriteRenderer>();
-            Invoke(nameof(PlayAnimation), 0.5f);
-        }
-
 
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -70,7 +71,7 @@ namespace Invaders
         {
             ChangeWalkState();
 
-            var levelOfAnger = invadersManager.GetComponent<InvadersCount>().GetLevelOfAnger();
+            var levelOfAnger = invadersManager.GetLevelOfAnger();
             var speed = levelOfAnger switch
             {
                 LevelOfAnger.NotReallyGoodForYou => 0.1f,
@@ -90,12 +91,5 @@ namespace Invaders
 
             SpriteRender.sprite = (walkStateSprites[CurrentSpriteIndex]);
         }
-    }
-
-    public enum InvaderTypes
-    {
-        Octopus,
-        Crab,
-        Squid,
     }
 }
